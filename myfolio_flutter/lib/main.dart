@@ -15,22 +15,31 @@ import 'package:serverpod_auth_idp_flutter/serverpod_auth_idp_flutter.dart';
 /// production servers.
 /// In a larger app, you may want to use the dependency injection of your choice
 /// instead of using a global client object. This is just a simple example.
+import 'dart:convert';
+import 'package:flutter/services.dart';
+
 late final Client client;
 
-late String serverUrl;
+Future<String> getServerUrl() async {
+  // 1. Check for dart define (set during build)
+  const apiUrlDefine = String.fromEnvironment('API_URL');
+  if (apiUrlDefine.isNotEmpty) {
+    return apiUrlDefine;
+  }
+
+  // 2. Fallback to assets/config.json
+  try {
+    final configString = await rootBundle.loadString('assets/config.json');
+    final config = jsonDecode(configString);
+    return config['apiUrl'] ?? 'http://localhost:8080';
+  } catch (e) {
+    return 'http://localhost:8080';
+  }
+}
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  // When you are running the app on a physical device, you need to set the
-  // server URL to the IP address of your computer. You can find the IP
-  // address by running `ipconfig` on Windows or `ifconfig` on Mac/Linux.
-  //
-  // You can set the variable when running or building your app like this:
-  // E.g. `flutter run --dart-define=SERVER_URL=https://api.example.com/`.
-  //
-  // Otherwise, the server URL is fetched from the assets/config.json file or
-  // defaults to http://$localhost:8080/ if not found.
   final serverUrl = await getServerUrl();
 
   client = Client(serverUrl)

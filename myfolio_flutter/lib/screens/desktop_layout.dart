@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:myfolio_client/myfolio_client.dart';
 import 'package:myfolio_flutter/providers/user_provider.dart';
+import 'package:myfolio_flutter/utils/constants.dart';
 import 'package:myfolio_flutter/utils/responsive.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:myfolio_flutter/widgets/about_me_section.dart';
 import 'package:myfolio_flutter/widgets/navigation_bar_widget.dart';
 import 'package:myfolio_flutter/widgets/profile_overview_widget.dart';
@@ -41,7 +43,12 @@ class DesktopLayout extends StatelessWidget {
             flex: 1,
             child: ProfileOverView(
               user: user,
-              onDownload: () async {},
+              onDownload: () async {
+                final url = Uri.parse(defaultResumeUrl);
+                if (await canLaunchUrl(url)) {
+                  await launchUrl(url, mode: LaunchMode.externalApplication);
+                }
+              },
             ),
           ),
           Gap(

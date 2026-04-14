@@ -19,7 +19,6 @@ class ProfileOverView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    debugPrint("User in Profile Overview: ${user?.name}");
     return ResponsiveLayoutBuilder(
       mobile: (context) => _buildContent(context, isCompact: true),
       tablet: (context) => _buildContent(context, isCompact: false),
@@ -34,106 +33,89 @@ class ProfileOverView extends StatelessWidget {
     final double socialSize = isCompact ? 20.0 : 24.0;
 
     final colorScheme = Theme.of(context).colorScheme;
-    return Container(
-      // Use responsive spacing for consistent margins
-      height: context.isMobile ? context.hp(75) : context.hp(70),
-      padding: EdgeInsets.only(
-        top: padding,
-        left: padding,
-        right: padding,
-        bottom: 0,
-      ),
-      decoration: BoxDecoration(
-        color: colorScheme.surface,
-        borderRadius: BorderRadius.circular(16),
-        boxShadow: [
-          BoxShadow(
-            color: colorScheme.shadow.withValues(alpha: 0.15),
-            blurRadius: 10,
-            offset: const Offset(0, 4),
+    return Stack(
+      clipBehavior: Clip.none,
+      alignment: Alignment.topCenter,
+      children: [
+        Container(
+          // Use responsive spacing for consistent margins
+          height: context.isMobile ? context.hp(75) : context.hp(70),
+          margin: EdgeInsets.only(top: imageSize / 2),
+          padding: EdgeInsets.only(
+            top: padding,
+            left: padding,
+            right: padding,
+            bottom: 0,
           ),
-        ],
-      ),
-      child: ScrollConfiguration(
-        behavior: ScrollConfiguration.of(context).copyWith(scrollbars: false),
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: EdgeInsets.only(
-              top: isCompact ? 8 : 12,
-              bottom: isCompact ? 20 : 30,
-            ),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                // Profile Picture
-                Container(
-                  height: imageSize,
-                  width: imageSize,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    border: Border.all(color: Colors.white, width: 4),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withValues(alpha: 0.2),
-                        blurRadius: 10,
-                        offset: const Offset(0, 4),
-                      ),
-                    ],
-                  ),
-                  child: ClipOval(
-                    child: Image.asset(
-                      "assets/images/profile_pic.jpg",
-                      // fit: BoxFit.cover,
-                      errorBuilder: (context, error, stackTrace) {
-                        return Container(
-                          color: Colors.grey.shade300,
-                          child: Icon(Icons.person, size: imageSize * 0.6),
-                        );
-                      },
+          decoration: BoxDecoration(
+            color: colorScheme.surface,
+            borderRadius: BorderRadius.circular(16),
+            boxShadow: [
+              BoxShadow(
+                color: colorScheme.shadow.withValues(alpha: 0.15),
+                blurRadius: 10,
+                offset: const Offset(0, 4),
+              ),
+            ],
+          ),
+          child: ScrollConfiguration(
+            behavior: ScrollConfiguration.of(
+              context,
+            ).copyWith(scrollbars: false),
+            child: SingleChildScrollView(
+              child: Padding(
+                padding: EdgeInsets.only(
+                  top: imageSize / 2 + (isCompact ? 8 : 12),
+                  bottom: isCompact ? 20 : 30,
+                ),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      user?.name ?? '',
+                      style: AppTextStyle()
+                          .heading(
+                            color: colorScheme.onSurface,
+                            letterSpacing: 2.0,
+                          )
+                          .copyWith(
+                            fontSize: isCompact
+                                ? 18
+                                : null, // Adjust font size if compact
+                          ),
+                      textAlign: TextAlign.center,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
                     ),
-                  ),
-                ),
-                Gap(isCompact ? 12 : 16),
-                Text(
-                  user?.name ?? '',
-                  style: AppTextStyle()
-                      .heading(color: colorScheme.onSurface, letterSpacing: 2.0)
-                      .copyWith(
-                        fontSize: isCompact
-                            ? 18
-                            : null, // Adjust font size if compact
+                    Gap(isCompact ? 6 : 8),
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 16,
+                        vertical: 8,
                       ),
-                  textAlign: TextAlign.center,
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                ),
-                Gap(isCompact ? 6 : 8),
-                Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                  decoration: BoxDecoration(
-                    color: colorScheme.onSurface,
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: Text(
-                    user?.title ?? '',
-                    style: AppTextStyle()
-                        .medium(
-                          color: colorScheme.onInverseSurface,
-                          letterSpacing: 1.5,
-                        )
-                        .copyWith(
-                          fontWeight: FontWeight.bold,
-                          fontSize: isCompact ? 10 : 12,
-                        ),
-                    textAlign: TextAlign.center,
-                  ),
-                ),
-                Gap(isCompact ? 16 : 20),
-                // Social Buttons
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children:
-                      (user?.socialUrls ?? [])
+                      decoration: BoxDecoration(
+                        color: colorScheme.onSurface,
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: Text(
+                        user?.title ?? '',
+                        style: AppTextStyle()
+                            .medium(
+                              color: colorScheme.onInverseSurface,
+                              letterSpacing: 1.5,
+                            )
+                            .copyWith(
+                              fontWeight: FontWeight.bold,
+                              fontSize: isCompact ? 10 : 12,
+                            ),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                    Gap(isCompact ? 16 : 20),
+                    // Social Buttons
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: (user?.socialUrls ?? [])
                           .map(
                             (social) => Container(
                               padding: EdgeInsets.all(isCompact ? 6 : 8),
@@ -158,78 +140,99 @@ class ProfileOverView extends StatelessWidget {
                             ),
                           )
                           .toList(),
-                ),
-                Gap(isCompact ? 16 : 20),
-                // Contact Information
-                Container(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: isCompact ? 12 : 16,
-                    vertical: isCompact ? 8 : 12,
-                  ),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: Column(
-                    children: [
-                      _buildContactTile(
-                        context: context,
-                        icon: Icons.phone_android_rounded,
-                        title: 'Phone'.toUpperCase(),
-                        subtitle: user?.phoneNumber ?? '',
-                        isCompact: isCompact,
+                    ),
+                    Gap(isCompact ? 16 : 20),
+                    // Contact Information
+                    Container(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: isCompact ? 12 : 16,
+                        vertical: isCompact ? 8 : 12,
                       ),
-                      Divider(color: colorScheme.outline.withValues(alpha: 0.5)),
-                      _buildContactTile(
-                        context: context,
-                        icon: Icons.email,
-                        title: 'Email'.toUpperCase(),
-                        subtitle: user?.email ?? '',
-                        isCompact: isCompact,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(12),
                       ),
-                      Divider(color: colorScheme.outline.withValues(alpha: 0.5)),
-                      _buildContactTile(
-                        context: context,
-                        icon: Icons.location_on_outlined,
-                        title: 'Location'.toUpperCase(),
-                        subtitle: user?.location ?? '',
-                        isCompact: isCompact,
+                      child: Column(
+                        children: [
+                          _buildContactTile(
+                            context: context,
+                            icon: Icons.phone_android_rounded,
+                            title: 'Phone'.toUpperCase(),
+                            subtitle: user?.phoneNumber ?? '',
+                            isCompact: isCompact,
+                          ),
+                          Divider(
+                            color: colorScheme.outline.withValues(alpha: 0.5),
+                          ),
+                          _buildContactTile(
+                            context: context,
+                            icon: Icons.email,
+                            title: 'Email'.toUpperCase(),
+                            subtitle: user?.email ?? '',
+                            isCompact: isCompact,
+                          ),
+                          Divider(
+                            color: colorScheme.outline.withValues(alpha: 0.5),
+                          ),
+                          _buildContactTile(
+                            context: context,
+                            icon: Icons.location_on_outlined,
+                            title: 'Location'.toUpperCase(),
+                            subtitle: user?.location ?? '',
+                            isCompact: isCompact,
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
-                ),
-                Gap(isCompact ? 36 : 24),
-                // Resume Button
-                // Resume Buttons
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    RoundedButtonWidget(
-                      buttonText: 'Download Resume',
-                      // width: isCompact ? 100 : 220,
-                      width: 220,
-                      // onpressed: () => launchUrl(
-                      //   Uri.parse(user?.resumeUrl ?? ''),
-                      //   mode: LaunchMode.externalApplication,
-                      // ),
-                      onpressed: () => onDownload?.call(),
+                    ),
+                    Gap(isCompact ? 36 : 14),
+                    // Resume Button
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        RoundedButtonWidget(
+                          buttonText: 'Download Resume',
+                          width: 220,
+                          onpressed: () => onDownload?.call(),
+                        ),
+                      ],
                     ),
                   ],
                 ),
-              ],
+              ),
             ),
           ),
         ),
-      ),
-    );
-  }
-
-  Widget _buildDivider(ColorScheme colorScheme) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 4),
-      child: Divider(
-        height: 1,
-        color: colorScheme.outlineVariant.withValues(alpha: 0.2),
-      ),
+        // Profile Picture
+        Positioned(
+          top: 0,
+          child: Container(
+            height: imageSize,
+            width: imageSize,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              border: Border.all(color: Colors.white, width: 4),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withValues(alpha: 0.2),
+                  blurRadius: 10,
+                  offset: const Offset(0, 4),
+                ),
+              ],
+            ),
+            child: ClipOval(
+              child: Image.asset(
+                "assets/images/profile_pic.jpg",
+                // fit: BoxFit.cover,
+                errorBuilder: (context, error, stackTrace) {
+                  return Container(
+                    color: Colors.grey.shade300,
+                    child: Icon(Icons.person, size: imageSize * 0.6),
+                  );
+                },
+              ),
+            ),
+          ),
+        ),
+      ],
     );
   }
 

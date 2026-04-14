@@ -6,6 +6,8 @@ import 'package:myfolio_flutter/utils/responsive.dart';
 String linkedIn = 'assets/icons/linkedin.png';
 String github = 'assets/icons/github.png';
 String stack = 'assets/icons/stack.png';
+String defaultResumeUrl =
+    'https://drive.google.com/file/d/1qIpPreb7mEQfptQi-XaRr_zyQcOx5str/view?usp=drive_link';
 
 Color getColorForSkill(String title) {
   switch (title) {

@@ -133,46 +133,60 @@ class _ProjectShowcaseState extends State<ProjectShowcase> {
   }
 
   Widget _buildContent(BuildContext context) {
-    final card = _buildGlassCard(context);
+    return Positioned.fill(
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          final card = _buildGlassCard(context);
+          final verticalPadding = 32.0;
+          final maxCardHeight = constraints.maxHeight - (verticalPadding * 2);
 
-    switch (_alignment) {
-      case _CardAlignment.left:
-        return Positioned.fill(
-          child: Padding(
-            padding: const EdgeInsets.all(32),
-            child: Align(
-              alignment: Alignment.centerLeft,
-              child: ConstrainedBox(
-                constraints: const BoxConstraints(maxWidth: 480),
-                child: card,
-              ),
-            ),
-          ),
-        );
-      case _CardAlignment.right:
-        return Positioned.fill(
-          child: Padding(
-            padding: const EdgeInsets.all(32),
-            child: Align(
-              alignment: Alignment.centerRight,
-              child: ConstrainedBox(
-                constraints: const BoxConstraints(maxWidth: 480),
-                child: card,
-              ),
-            ),
-          ),
-        );
-      case _CardAlignment.bottom:
-        return Positioned.fill(
-          child: Padding(
-            padding: const EdgeInsets.all(32),
-            child: Align(
-              alignment: Alignment.bottomCenter,
-              child: card,
-            ),
-          ),
-        );
-    }
+          switch (_alignment) {
+            case _CardAlignment.left:
+              return Padding(
+                padding: EdgeInsets.all(verticalPadding),
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: ConstrainedBox(
+                    constraints: BoxConstraints(
+                      maxWidth: 480,
+                      maxHeight: maxCardHeight,
+                    ),
+                    child: card,
+                  ),
+                ),
+              );
+            case _CardAlignment.right:
+              return Padding(
+                padding: EdgeInsets.all(verticalPadding),
+                child: Align(
+                  alignment: Alignment.centerRight,
+                  child: ConstrainedBox(
+                    constraints: BoxConstraints(
+                      maxWidth: 480,
+                      maxHeight: maxCardHeight,
+                    ),
+                    child: card,
+                  ),
+                ),
+              );
+            case _CardAlignment.bottom:
+              return Padding(
+                padding: EdgeInsets.all(verticalPadding),
+                child: Align(
+                  alignment: Alignment.bottomCenter,
+                  child: ConstrainedBox(
+                    constraints: BoxConstraints(
+                      maxWidth: 600,
+                      maxHeight: maxCardHeight,
+                    ),
+                    child: card,
+                  ),
+                ),
+              );
+          }
+        },
+      ),
+    );
   }
 
   Widget _buildGlassCard(BuildContext context) {
@@ -198,68 +212,71 @@ class _ProjectShowcaseState extends State<ProjectShowcase> {
                 borderSide ??
                 Border.all(color: Colors.white.withValues(alpha: 0.1)),
           ),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // Category tag
-              if (project.techStack != null && project.techStack!.isNotEmpty)
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // Category tag
+                if (project.techStack != null && project.techStack!.isNotEmpty)
+                  Text(
+                    project.techStack!.first.toUpperCase(),
+                    style: AppTextStyle()
+                        .smallBold(color: accent)
+                        .copyWith(
+                          letterSpacing: 3,
+                          fontSize: 11,
+                        ),
+                  ),
+                const Gap(12),
+
+                // Title
                 Text(
-                  project.techStack!.first.toUpperCase(),
+                  project.title,
                   style: AppTextStyle()
-                      .smallBold(color: accent)
-                      .copyWith(
-                        letterSpacing: 3,
-                        fontSize: 11,
+                      .heading(color: Colors.white)
+                      .copyWith(fontSize: 28, fontWeight: FontWeight.w800),
+                ),
+                const Gap(16),
+
+                // Description as bullet points
+                ..._buildDescriptionBullets(project.description, accent),
+                const Gap(20),
+
+                // Tech chips
+                if (project.techStack != null && project.techStack!.isNotEmpty)
+                  Wrap(
+                    spacing: 10,
+                    runSpacing: 10,
+                    children: project.techStack!
+                        .map((tech) => _GlassTechChip(tech: tech))
+                        .toList(),
+                  ),
+                const Gap(12),
+
+                // View project link
+                if (project.projectUrl != null &&
+                    project.projectUrl!.isNotEmpty)
+                  Padding(
+                    padding: const EdgeInsets.only(top: 8),
+                    child: TextButton.icon(
+                      onPressed: () => _launchUrl(project.projectUrl!),
+                      icon: const Icon(
+                        Icons.arrow_outward_rounded,
+                        size: 18,
+                        color: accent,
                       ),
-                ),
-              const Gap(12),
-
-              // Title
-              Text(
-                project.title,
-                style: AppTextStyle()
-                    .heading(color: Colors.white)
-                    .copyWith(fontSize: 28, fontWeight: FontWeight.w800),
-              ),
-              const Gap(16),
-
-              // Description as bullet points
-              ..._buildDescriptionBullets(project.description, accent),
-              const Gap(20),
-
-              // Tech chips
-              if (project.techStack != null && project.techStack!.isNotEmpty)
-                Wrap(
-                  spacing: 10,
-                  runSpacing: 10,
-                  children: project.techStack!
-                      .map((tech) => _GlassTechChip(tech: tech))
-                      .toList(),
-                ),
-              const Gap(12),
-
-              // View project link
-              if (project.projectUrl != null && project.projectUrl!.isNotEmpty)
-                Padding(
-                  padding: const EdgeInsets.only(top: 8),
-                  child: TextButton.icon(
-                    onPressed: () => _launchUrl(project.projectUrl!),
-                    icon: const Icon(
-                      Icons.arrow_outward_rounded,
-                      size: 18,
-                      color: accent,
-                    ),
-                    label: Text(
-                      'View Project',
-                      style: AppTextStyle().mediumBold(color: accent),
-                    ),
-                    style: TextButton.styleFrom(
-                      padding: EdgeInsets.zero,
+                      label: Text(
+                        'View Project',
+                        style: AppTextStyle().mediumBold(color: accent),
+                      ),
+                      style: TextButton.styleFrom(
+                        padding: EdgeInsets.zero,
+                      ),
                     ),
                   ),
-                ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
@@ -267,14 +284,14 @@ class _ProjectShowcaseState extends State<ProjectShowcase> {
   }
 
   List<Widget> _buildDescriptionBullets(String description, Color accent) {
+    if (description.isEmpty) return [];
+
     final sentences = description
-        .split(RegExp(r'[.•\n]+'))
+        .split(RegExp(r'(?<=[.!?])\s+|\n|•'))
         .map((s) => s.trim())
         .where((s) => s.isNotEmpty)
-        .take(4)
+        .take(5)
         .toList();
-
-    if (sentences.isEmpty) return [];
 
     return sentences.map((sentence) {
       return Padding(

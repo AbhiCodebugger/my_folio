@@ -36,4 +36,9 @@ EXPOSE 8081
 EXPOSE 8082
 
 # Define the entrypoint command
-ENTRYPOINT ./server --mode=$runmode --server-id=$serverid --logging=$logging --role=$role
+ENTRYPOINT ./server --mode=$runmode --server-id=$serverid --logging=$logging --role=$role \
+  --database-host=$DATABASE_HOST \
+  --database-port=$DATABASE_PORT \
+  --database-name=$DATABASE_NAME \
+  --database-user=$DATABASE_USER \
+  --database-password=$DATABASE_PASSWORD
