@@ -7,21 +7,21 @@
 # Configuration for the main API server.
 apiServer:
   port: 8080
-  publicHost: myfolio-api.onrender.com
+  publicHost: my-folio-a91r.onrender.com
   publicPort: 443
   publicScheme: https
 
 # Configuration for the Insights server.
 insightsServer:
   port: 8081
-  publicHost: myfolio-insights.onrender.com
+  publicHost: my-folio-a91r-insights.onrender.com
   publicPort: 443
   publicScheme: https
 
 # Configuration for the web server.
 webServer:
   port: 8082
-  publicHost: myfolio-app.onrender.com
+  publicHost: my-folio-a91r-web.onrender.com
   publicPort: 443
   publicScheme: https
 

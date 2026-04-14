@@ -28,7 +28,7 @@ jobs:
       - name: Build Web
         run: |
           cd myfolio_flutter
-          flutter build web --release --base-href "/my_folio/" --dart-define=API_URL=https://myfolio-api.onrender.com
+          flutter build web --release --base-href "/my_folio/" --dart-define=API_URL=https://my-folio-a91r.onrender.com
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
