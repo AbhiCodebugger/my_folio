@@ -29,13 +29,13 @@ webServer:
 
 # This is the database setup for your server.
 database:
-  host: localhost
-  port: 8090
-  name: myfolio
-  user: postgres
-  #requireSsl: true # defaults to false
+  host: ep-dawn-field-an6riddz.c-6.us-east-1.aws.neon.tech
+  port: 5432
+  name: neondb
+  user: neondb_owner
+  requireSsl: true # defaults to false
   #isUnixSocket: true # defaults to false
-  #maxConnectionCount: 10 # Defaults to 10, a negative or null value removes the limit
+  maxConnectionCount: 20 # Defaults to 10, a negative or null value removes the limit
 
 # This is the setup for Redis.
 redis:

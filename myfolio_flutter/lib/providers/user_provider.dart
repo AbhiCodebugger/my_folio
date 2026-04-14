@@ -6,12 +6,7 @@ import 'package:myfolio_flutter/main.dart';
 
 class UserProvider extends ChangeNotifier {
   UserProvider() {
-    _fetchUserOverview();
-    fetchRoles();
-    fetchProjects();
-    fetchExperiences();
-    fetchEducations();
-    fetchSkills();
+    init();
   }
   static String urlPrefix = 'assets/images';
 
@@ -33,27 +28,6 @@ class UserProvider extends ChangeNotifier {
   List<Education> _educations = [];
   List<Education> get educations => _educations;
 
-  Future<void> fetchSkills() async {
-    try {
-      List<Skill> skills = await client.portfolio.getSkills();
-      _skills = skills;
-      notifyListeners();
-    } catch (e) {
-      debugPrint('Error fetching skills: $e');
-      rethrow;
-    }
-  }
-
-  Future<void> createSkills() async {
-    try {
-      await client.portfolio.createSkills();
-      fetchSkills();
-    } catch (e) {
-      debugPrint('Error creating skills: $e');
-      rethrow;
-    }
-  }
-
   bool _isLoading = false;
   bool get isLoading => _isLoading;
 
@@ -69,61 +43,90 @@ class UserProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  Future<void> init() async {
+    try {
+      isLoading = true;
+      // Fetch everything in parallel
+      await Future.wait([
+        fetchUserOverview(),
+        fetchRoles(),
+        fetchProjects(),
+        fetchExperiences(),
+        fetchEducations(),
+        fetchSkills(),
+      ]);
+    } catch (e) {
+      debugPrint('Error during initialization: $e');
+    } finally {
+      isLoading = false;
+    }
+  }
+
+  Future<void> fetchSkills() async {
+    try {
+      _skills = await client.portfolio.getSkills();
+      notifyListeners();
+    } catch (e) {
+      debugPrint('Error fetching skills: $e');
+    }
+  }
+
+  Future<void> createSkills() async {
+    try {
+      await client.portfolio.createSkills();
+      await fetchSkills();
+    } catch (e) {
+      debugPrint('Error creating skills: $e');
+      rethrow;
+    }
+  }
+
   Future<void> createProjects() async {
     try {
       await client.portfolio.createProjects();
       await fetchProjects();
-      // Optionally, fetch updated work skills here
     } catch (e) {
-      debugPrint('Error creating work skill: $e');
+      debugPrint('Error creating projects: $e');
       rethrow;
     }
   }
 
   Future<void> fetchProjects() async {
     try {
-      List<Project> projects = await client.portfolio.getProjectList();
-      _projects = projects;
+      _projects = await client.portfolio.getProjectList();
       notifyListeners();
     } catch (e) {
       debugPrint('Error fetching projects: $e');
-      rethrow;
     }
   }
 
   Future<void> addUserData() async {
     try {
       await client.user.createUser();
-      await _fetchUserOverview();
-      await fetchRoles();
+      await init();
     } catch (e) {
       debugPrint('Error creating user: $e');
     }
   }
 
-  Future<void> _fetchUserOverview() async {
+  Future<void> fetchUserOverview() async {
     try {
-      isLoading = true;
-      User? user = await client.user.getUser();
-      if (user != null) {
-        _user = user;
+      User? result = await client.user.getUser();
+      if (result != null) {
+        _user = result;
         notifyListeners();
       }
     } catch (e) {
       debugPrint('Error fetching user overview: $e');
-    } finally {
-      isLoading = false;
     }
   }
 
   Future<void> fetchRoles() async {
     try {
-      List<Roles> roles = await client.portfolio.getRoles();
-      _roles = roles;
+      _roles = await client.portfolio.getRoles();
       notifyListeners();
     } catch (e) {
-      debugPrint('Error fetching skills: $e');
-      rethrow;
+      debugPrint('Error fetching roles: $e');
     }
   }
 
@@ -175,12 +178,10 @@ class UserProvider extends ChangeNotifier {
 
   Future<void> fetchExperiences() async {
     try {
-      List<Experience> experiences = await client.portfolio.getExperiences();
-      _experiences = experiences;
+      _experiences = await client.portfolio.getExperiences();
       notifyListeners();
     } catch (e) {
       debugPrint('Error fetching experiences: $e');
-      rethrow;
     }
   }
 
@@ -206,12 +207,10 @@ class UserProvider extends ChangeNotifier {
 
   Future<void> fetchEducations() async {
     try {
-      List<Education> educations = await client.portfolio.getEducations();
-      _educations = educations;
+      _educations = await client.portfolio.getEducations();
       notifyListeners();
     } catch (e) {
       debugPrint('Error fetching educations: $e');
-      rethrow;
     }
   }
 }
