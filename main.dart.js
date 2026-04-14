@@ -24590,7 +24590,7 @@ _.x=i
 _.y=j},
 avi(){var s=0,r=A.K(t.N),q
 var $async$avi=A.L(function(a,b){if(a===1)return A.H(b,r)
-while(true)switch(s){case 0:q="https://myfolio-api.onrender.com"
+while(true)switch(s){case 0:q="https://my-folio-a91r.onrender.com"
 s=1
 break
 case 1:return A.I(q,r)}})
