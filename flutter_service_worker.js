@@ -41,7 +41,7 @@ const RESOURCES = {"assets/assets/fonts/Optima-Medium.ttf": "19cfff94ada60c83004
 "canvaskit/canvaskit.js": "728b2d477d9b8c14593d4f9b82b484f3",
 "canvaskit/skwasm.js": "ea559890a088fe28b4ddf70e17e60052",
 "flutter.js": "83d881c1dbb6d6bcd6b42e274605b69c",
-"flutter_bootstrap.js": "e02e9e4ce063c2c4f75d56c3c91b3e17",
+"flutter_bootstrap.js": "8f7918575a1b80776fb58207e0888078",
 "main.dart.js": "4745307f80e768e47ad82d5643c7e69c",
 "version.json": "1d4a6df920d926f64b69d09625185890",
 "icons/Icon-maskable-512.png": "301a7604d45b3e739efc881eb04896ea",
