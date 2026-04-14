@@ -1,0 +1,24 @@
+---
+description: Flutter widget composition and state management patterns
+globs: "**/*.dart"
+alwaysApply: false
+---
+
+# Flutter Patterns
+
+## Widgets
+- Composition over inheritance; favor small private Widget classes
+- Use `const` constructors in `build()` when possible
+- Break large `build()` into smaller reusable widgets
+- Use `ListView.builder` or `SliverList` for long lists (lazy loading)
+- Use `compute()` for expensive work (e.g., JSON parsing) off UI thread
+- No network calls or heavy computation in `build()`
+
+## State
+- Prefer `ValueNotifier` + `ValueListenableBuilder` for local state
+- Use `ChangeNotifier` + `ListenableBuilder` for shared state
+- This project uses Provider and GetIt; follow existing patterns
+
+## Navigation
+- Use `go_router` for declarative routing and deep links
+- Use `Navigator` for dialogs and short-lived screens

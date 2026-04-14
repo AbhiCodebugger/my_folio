@@ -1,0 +1,111 @@
+{
+  "__className__": "serverpod.DatabaseMigration",
+  "actions": [
+    {
+      "__className__": "serverpod.DatabaseMigrationAction",
+      "type": "alterTable",
+      "alterTable": {
+        "__className__": "serverpod.TableMigration",
+        "name": "skills",
+        "schema": "public",
+        "addColumns": [],
+        "deleteColumns": [
+          "description",
+          "imageUrl",
+          "proficiencyLevel",
+          "yearsOfExperience"
+        ],
+        "modifyColumns": [],
+        "addIndexes": [],
+        "deleteIndexes": [],
+        "addForeignKeys": [],
+        "deleteForeignKeys": [],
+        "warnings": [
+          {
+            "__className__": "serverpod.DatabaseMigrationWarning",
+            "type": "columnDropped",
+            "message": "Column \"description\" of table \"skills\" will be dropped.",
+            "table": "skills",
+            "columns": [
+              "description"
+            ],
+            "destrucive": true
+          },
+          {
+            "__className__": "serverpod.DatabaseMigrationWarning",
+            "type": "columnDropped",
+            "message": "Column \"imageUrl\" of table \"skills\" will be dropped.",
+            "table": "skills",
+            "columns": [
+              "imageUrl"
+            ],
+            "destrucive": true
+          },
+          {
+            "__className__": "serverpod.DatabaseMigrationWarning",
+            "type": "columnDropped",
+            "message": "Column \"proficiencyLevel\" of table \"skills\" will be dropped.",
+            "table": "skills",
+            "columns": [
+              "proficiencyLevel"
+            ],
+            "destrucive": true
+          },
+          {
+            "__className__": "serverpod.DatabaseMigrationWarning",
+            "type": "columnDropped",
+            "message": "Column \"yearsOfExperience\" of table \"skills\" will be dropped.",
+            "table": "skills",
+            "columns": [
+              "yearsOfExperience"
+            ],
+            "destrucive": true
+          }
+        ]
+      }
+    }
+  ],
+  "warnings": [
+    {
+      "__className__": "serverpod.DatabaseMigrationWarning",
+      "type": "columnDropped",
+      "message": "Column \"description\" of table \"skills\" will be dropped.",
+      "table": "skills",
+      "columns": [
+        "description"
+      ],
+      "destrucive": true
+    },
+    {
+      "__className__": "serverpod.DatabaseMigrationWarning",
+      "type": "columnDropped",
+      "message": "Column \"imageUrl\" of table \"skills\" will be dropped.",
+      "table": "skills",
+      "columns": [
+        "imageUrl"
+      ],
+      "destrucive": true
+    },
+    {
+      "__className__": "serverpod.DatabaseMigrationWarning",
+      "type": "columnDropped",
+      "message": "Column \"proficiencyLevel\" of table \"skills\" will be dropped.",
+      "table": "skills",
+      "columns": [
+        "proficiencyLevel"
+      ],
+      "destrucive": true
+    },
+    {
+      "__className__": "serverpod.DatabaseMigrationWarning",
+      "type": "columnDropped",
+      "message": "Column \"yearsOfExperience\" of table \"skills\" will be dropped.",
+      "table": "skills",
+      "columns": [
+        "yearsOfExperience"
+      ],
+      "destrucive": true
+    }
+  ],
+  "migrationApiVersion": 1
+}

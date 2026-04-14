@@ -1,0 +1,25 @@
+---
+description: Flutter and Dart testing patterns
+globs: "**/test/**/*.dart"
+alwaysApply: false
+---
+
+# Flutter Testing
+
+## Running Tests
+- Use `flutter test` (or `run_tests` tool if available)
+
+## Patterns
+- **AAA**: Arrange-Act-Assert (Given-When-Then)
+- Unit tests: domain logic, data layer, state management
+- Widget tests: UI components
+- Integration tests: end-to-end flows via `integration_test` package
+
+## Mocks
+- Prefer fakes/stubs over mocks
+- Use `mockito` or `mocktail` when mocks are needed
+- Avoid code generation for mocks when possible
+
+## Coverage
+- Aim for high test coverage
+- Prefer `package:checks` for assertions when available

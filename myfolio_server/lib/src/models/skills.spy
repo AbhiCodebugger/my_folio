@@ -1,0 +1,5 @@
+class: Skill
+table: skills
+fields:
+  name: String
+  displayOrder: int?, scope=serverOnly, default=0

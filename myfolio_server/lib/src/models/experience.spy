@@ -1,0 +1,9 @@
+class: Experience
+table: experiences
+fields:
+  duration: String
+  company: String
+  position: String
+  displayOrder: int?, scope=serverOnly, default=0
+  createdAt: DateTime?, scope=serverOnly, default=now
+  updatedAt: DateTime?, scope=serverOnly, default=now

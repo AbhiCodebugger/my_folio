@@ -1,0 +1,11 @@
+class: Education
+table: educations
+fields:
+  duration: String
+  institution: String
+  degree: String
+  fieldOfStudy: String
+  grade: String?
+  displayOrder: int?, default=0
+  createdAt: DateTime?, scope=serverOnly, default=now
+  updatedAt: DateTime?, scope=serverOnly, default=now

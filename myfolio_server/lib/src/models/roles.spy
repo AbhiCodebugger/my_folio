@@ -1,0 +1,9 @@
+class: Roles
+table: roles
+fields:
+  title: String
+  description: String
+  yearsOfExperience: int?
+  displayOrder: int?, scope=serverOnly, default=0
+  updatedAt: DateTime?, scope=serverOnly, default=now
+  createdAt: DateTime?, scope=serverOnly, default=now

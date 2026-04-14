@@ -1,0 +1,11 @@
+class: Project
+table: projects
+fields:
+  title: String
+  description: String
+  imageUrl: String?
+  projectUrl: String?
+  techStack: List<String>?
+  isActive: bool, default=true
+  createdAt: DateTime?, scope=serverOnly, default=now
+  updatedAt: DateTime?, scope=serverOnly, default=now

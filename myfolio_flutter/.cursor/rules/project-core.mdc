@@ -1,0 +1,20 @@
+---
+description: Project context and architecture for shipperbee_delivery
+alwaysApply: true
+---
+
+# Shipperbee Delivery - Project Core
+
+## Project Overview
+Mobile delivery app for last-mile delivery consolidation. Flutter app with `lib/main_dev.dart` as dev entry point (flavors: Dev, etc.).
+
+## Architecture
+- **Layers**: Presentation (ui/), Domain (business logic), Data (network/, models/)
+- **State**: Provider for context-based DI; GetIt for non-context services
+- **Structure**: Feature-based under `lib/` (ui/, network/, models/, util/)
+
+## Key Conventions
+- Entry points: `main_dev.dart`, `main.dart` (set via `Environment.setEnvironment`)
+- Use `dart_format` and `analyze_files` for formatting/linting
+- Use `logging` package, not `print`
+- Explain Dart-specific features (null safety, futures, streams) when suggesting code

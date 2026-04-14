@@ -1,0 +1,28 @@
+---
+description: Dart coding standards and conventions
+globs: "**/*.dart"
+alwaysApply: false
+---
+
+# Dart Standards
+
+## Style
+- Line length: 80 chars or fewer
+- `PascalCase` classes, `camelCase` members/variables/functions, `snake_case` files
+- Arrow syntax for simple one-line functions
+- Avoid abbreviations; use meaningful names
+
+## Null Safety & Async
+- Soundly null-safe; avoid `!` unless guaranteed non-null
+- Use `async`/`await` with robust error handling
+- Use `Future` for single async ops, `Stream` for sequences
+
+## Code Quality
+- Functions: single purpose, under 20 lines
+- Use pattern matching and exhaustive `switch` where they simplify code
+- Use records for multiple return values when a class is overkill
+- Custom exceptions for domain-specific errors
+- Use `dart:developer` log, not print
+
+## Effective Dart
+Follow https://dart.dev/effective-dart. Add `///` doc comments to public APIs.

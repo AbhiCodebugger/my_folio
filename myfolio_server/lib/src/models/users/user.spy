@@ -1,0 +1,14 @@
+class: User
+table: user
+fields:
+  name: String
+  title: String
+  summary: String
+  imagePath: String
+  socialUrls: List<String>
+  phoneNumber: String
+  email: String
+  location: String
+  resumeUrl: String
+  updatedAt: DateTime?, scope=serverOnly, default=now
+  createdAt: DateTime?, scope=serverOnly, default=now

@@ -1,0 +1,26 @@
+---
+description: API models, Dio, and JSON serialization patterns
+globs: "**/network/**/*.dart"
+alwaysApply: false
+---
+
+# API & Models
+
+## JSON Serialization
+- Use `json_serializable` and `json_annotation`
+- Use `fieldRename: FieldRename.snake` for camelCase → snake_case
+- Run `dart run build_runner build --delete-conflicting-outputs` after changes
+
+```dart
+@JsonSerializable(fieldRename: FieldRename.snake)
+class User {
+  final String firstName;
+  User({required this.firstName});
+  factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
+  Map<String, dynamic> toJson() => _$UserToJson(this);
+}
+```
+
+## Network
+- This project uses Dio for REST APIs
+- Abstract data sources via Repositories/Services for testability
