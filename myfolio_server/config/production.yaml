@@ -27,10 +27,10 @@ webServer:
 
 # This is the database setup for your servers.
 database:
-  host: ${DATABASE_HOST}
+  host: ep-wild-hat-an9ko9w2-pooler.c-6.us-east-1.aws.neon.tech
   port: 5432
-  name: ${DATABASE_NAME}
-  user: ${DATABASE_USER}
+  name: neondb
+  user: neondb_owner
   requireSsl: true
 
 # This is the setup for Redis.
