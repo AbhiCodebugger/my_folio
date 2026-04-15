@@ -12,7 +12,6 @@ void run(List<String> args) async {
   // Initialize Serverpod and connect it with your generated code.
   final pod = Serverpod(args, Protocol(), Endpoints());
 
-
   // Setup a default page at the web root.
   // These are used by the default page.
   pod.webServer.addRoute(RootRoute(), '/');
@@ -58,4 +57,3 @@ void run(List<String> args) async {
   // Start the server.
   await pod.start();
 }
-
