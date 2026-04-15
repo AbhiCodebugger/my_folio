@@ -30,9 +30,8 @@ class _CustomLoaderState extends State<CustomLoader>
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
-
     return Container(
-      color: Colors.black.withValues(alpha: 0.7),
+      color: Colors.black.withValues(alpha: 0.3),
       child: Center(
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -40,7 +39,6 @@ class _CustomLoaderState extends State<CustomLoader>
             Stack(
               alignment: Alignment.center,
               children: [
-                // Inner pulsing circle
                 AnimatedBuilder(
                   animation: _controller,
                   builder: (context, child) {
@@ -54,13 +52,16 @@ class _CustomLoaderState extends State<CustomLoader>
                             colorScheme.primary.withValues(alpha: 0.5),
                             Colors.transparent,
                           ],
-                          stops: [0.5 + 0.3 * math.sin(_controller.value * 2 * math.pi), 1.0],
+                          stops: [
+                            0.5 +
+                                0.3 * math.sin(_controller.value * 2 * math.pi),
+                            1.0,
+                          ],
                         ),
                       ),
                     );
                   },
                 ),
-                // Rotating ring
                 RotationTransition(
                   turns: _controller,
                   child: Container(
@@ -74,12 +75,13 @@ class _CustomLoaderState extends State<CustomLoader>
                       ),
                     ),
                     child: CircularProgressIndicator(
-                      valueColor: AlwaysStoppedAnimation<Color>(colorScheme.primary),
+                      valueColor: AlwaysStoppedAnimation<Color>(
+                        colorScheme.primary,
+                      ),
                       strokeWidth: 2,
                     ),
                   ),
                 ),
-                // Center icon or logo placeholder
                 Icon(
                   Icons.auto_awesome,
                   color: colorScheme.primary,
@@ -89,7 +91,7 @@ class _CustomLoaderState extends State<CustomLoader>
             ),
             const SizedBox(height: 24),
             Text(
-              'Aligning Gravities...',
+              'Loading...',
               style: TextStyle(
                 color: Colors.white.withValues(alpha: 0.9),
                 fontSize: 16,
