@@ -5,6 +5,7 @@ import 'package:myfolio_flutter/providers/theme_provider.dart';
 import 'package:myfolio_flutter/providers/user_provider.dart';
 import 'package:myfolio_flutter/screens/home_screen.dart';
 import 'package:myfolio_flutter/utils/app_theme.dart';
+import 'package:myfolio_flutter/utils/image_precache.dart';
 import 'package:provider/provider.dart';
 import 'package:serverpod_auth_idp_flutter/serverpod_auth_idp_flutter.dart';
 import 'package:serverpod_flutter/serverpod_flutter.dart';
@@ -51,10 +52,37 @@ class MyApp extends StatelessWidget {
             theme: AppTheme.lightTheme,
             darkTheme: AppTheme.darkTheme,
             themeMode: themeProvider.themeMode,
+            builder: (context, child) {
+              return _StartupPrecache(child: child ?? const SizedBox.shrink());
+            },
             home: const HomeScreen(),
           );
         },
       ),
     );
   }
+}
+
+class _StartupPrecache extends StatefulWidget {
+  const _StartupPrecache({required this.child});
+
+  final Widget child;
+
+  @override
+  State<_StartupPrecache> createState() => _StartupPrecacheState();
+}
+
+class _StartupPrecacheState extends State<_StartupPrecache> {
+  bool _started = false;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (_started) return;
+    _started = true;
+    precacheWorkTabImages(context);
+  }
+
+  @override
+  Widget build(BuildContext context) => widget.child;
 }

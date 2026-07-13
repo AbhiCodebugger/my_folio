@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:myfolio_client/myfolio_client.dart';
 import 'package:myfolio_flutter/utils/app_textstyle.dart';
 import 'package:myfolio_flutter/utils/responsive.dart';
 
@@ -7,7 +8,15 @@ String linkedIn = 'assets/icons/linkedin.png';
 String github = 'assets/icons/github.png';
 String stack = 'assets/icons/stack.png';
 String defaultResumeUrl =
-    'https://drive.google.com/file/d/1qIpPreb7mEQfptQi-XaRr_zyQcOx5str/view?usp=drive_link';
+    'https://drive.google.com/file/d/1cUR-YqYjj90HceYdHSjUVWhdsGyPQhof/view?usp=sharing';
+
+String resumeUrlFor(User? user) {
+  final url = user?.resumeUrl;
+  if (url != null && url.isNotEmpty) {
+    return url;
+  }
+  return defaultResumeUrl;
+}
 
 Color getColorForSkill(String title) {
   switch (title) {

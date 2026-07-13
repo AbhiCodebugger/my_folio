@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:myfolio_client/myfolio_client.dart';
 import 'package:myfolio_flutter/utils/app_textstyle.dart';
+import 'package:myfolio_flutter/utils/work_tab_assets.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 enum _CardAlignment { left, right, bottom }
@@ -25,18 +26,7 @@ class ProjectShowcase extends StatefulWidget {
 class _ProjectShowcaseState extends State<ProjectShowcase> {
   bool _isHovered = false;
 
-  static const Map<String, String> _projectAssetMap = {
-    'Market Intelligence Platform': 'assets/images/news.webp',
-    'Freight & Logistics Suite': 'assets/images/logistic.webp',
-    'HealthVitals Tracker': 'assets/images/health.webp',
-    'Social Engagement Platform': 'assets/images/social.webp',
-    'E-Commerce Marketplace': 'assets/images/shopping.webp',
-  };
-
-  String get _assetPath {
-    return _projectAssetMap[widget.project.title] ??
-        'assets/images/${widget.project.title.toLowerCase().replaceAll(' ', '_')}.webp';
-  }
+  String get _assetPath => workTabImageForTitle(widget.project.title);
 
   _CardAlignment get _alignment {
     switch (widget.index % 3) {

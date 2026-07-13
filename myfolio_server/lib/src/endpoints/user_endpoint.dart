@@ -30,7 +30,7 @@ class UserEndpoint extends Endpoint {
         email: "ranjansme12@gmail.com",
         location: "Noida, India",
         resumeUrl:
-            "https://drive.google.com/file/d/1qIpPreb7mEQfptQi-XaRr_zyQcOx5str/view?usp=sharing",
+            'https://drive.google.com/file/d/1cUR-YqYjj90HceYdHSjUVWhdsGyPQhof/view?usp=sharing',
       );
       User newUser = await User.db.insertRow(session, user);
       session.log('User created with id : ${newUser.id}');
