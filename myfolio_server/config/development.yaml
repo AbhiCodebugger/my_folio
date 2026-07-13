@@ -27,13 +27,15 @@ webServer:
   publicPort: 8082
   publicScheme: http
 
-# This is the database setup for your server.
+# This is the database setup for your server. Local development connects to the
+# Postgres instance started by docker-compose.yaml (service "postgres"), so you
+# can develop fully offline without touching the remote Neon database.
 database:
-  host: ep-dawn-field-an6riddz.c-6.us-east-1.aws.neon.tech
-  port: 5432
-  name: neondb
-  user: neondb_owner
-  requireSsl: true # defaults to false
+  host: localhost
+  port: 8090
+  name: myfolio
+  user: postgres
+  requireSsl: false # defaults to false
   #isUnixSocket: true # defaults to false
   maxConnectionCount: 20 # Defaults to 10, a negative or null value removes the limit
 

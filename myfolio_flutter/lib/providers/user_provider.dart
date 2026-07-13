@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'dart:io';
 import 'package:myfolio_client/myfolio_client.dart';
 
-import 'package:myfolio_flutter/main.dart';
+import 'package:myfolio_flutter/bootstrap.dart';
+import 'package:myfolio_flutter/utils/retry.dart';
 
 class UserProvider extends ChangeNotifier {
   UserProvider() {
@@ -31,6 +32,12 @@ class UserProvider extends ChangeNotifier {
   bool _isLoading = false;
   bool get isLoading => _isLoading;
 
+  bool _loadFailed = false;
+  bool get loadFailed => _loadFailed;
+
+  String _loadingMessage = 'Loading...';
+  String get loadingMessage => _loadingMessage;
+
   set isLoading(bool value) {
     _isLoading = value;
     notifyListeners();
@@ -43,31 +50,54 @@ class UserProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  Future<void> retry() => init();
+
   Future<void> init() async {
-    try {
-      isLoading = true;
-      // Fetch everything in parallel
-      await Future.wait([
-        fetchUserOverview(),
-        fetchRoles(),
-        fetchProjects(),
-        fetchExperiences(),
-        fetchEducations(),
-        fetchSkills(),
-      ]);
-    } catch (e) {
-      debugPrint('Error during initialization: $e');
-    } finally {
-      isLoading = false;
+    _loadFailed = false;
+    _loadingMessage = 'Loading...';
+    isLoading = true;
+
+    final loaded = await retryUntilSuccess(
+      maxAttempts: 12,
+      delay: const Duration(seconds: 5),
+      onRetry: (attempt) {
+        _loadingMessage = 'Connecting to server...';
+        notifyListeners();
+        debugPrint('Server not ready, retrying ($attempt/11)...');
+      },
+      action: _loadAllData,
+    );
+
+    if (!loaded) {
+      _loadFailed = true;
+      _loadingMessage = 'Could not reach server';
+      debugPrint('Failed to load data after all retry attempts.');
     }
+
+    isLoading = false;
   }
 
-  Future<void> fetchSkills() async {
+  Future<bool> _loadAllData() async {
+    final results = await Future.wait([
+      fetchUserOverview(),
+      fetchRoles(),
+      fetchProjects(),
+      fetchExperiences(),
+      fetchEducations(),
+      fetchSkills(),
+    ]);
+
+    return results.every((success) => success);
+  }
+
+  Future<bool> fetchSkills() async {
     try {
       _skills = await client.portfolio.getSkills();
       notifyListeners();
+      return true;
     } catch (e) {
       debugPrint('Error fetching skills: $e');
+      return false;
     }
   }
 
@@ -91,12 +121,14 @@ class UserProvider extends ChangeNotifier {
     }
   }
 
-  Future<void> fetchProjects() async {
+  Future<bool> fetchProjects() async {
     try {
       _projects = await client.portfolio.getProjectList();
       notifyListeners();
+      return true;
     } catch (e) {
       debugPrint('Error fetching projects: $e');
+      return false;
     }
   }
 
@@ -109,24 +141,28 @@ class UserProvider extends ChangeNotifier {
     }
   }
 
-  Future<void> fetchUserOverview() async {
+  Future<bool> fetchUserOverview() async {
     try {
       User? result = await client.user.getUser();
       if (result != null) {
         _user = result;
         notifyListeners();
       }
+      return true;
     } catch (e) {
       debugPrint('Error fetching user overview: $e');
+      return false;
     }
   }
 
-  Future<void> fetchRoles() async {
+  Future<bool> fetchRoles() async {
     try {
       _roles = await client.portfolio.getRoles();
       notifyListeners();
+      return true;
     } catch (e) {
       debugPrint('Error fetching roles: $e');
+      return false;
     }
   }
 
@@ -176,12 +212,14 @@ class UserProvider extends ChangeNotifier {
     }
   }
 
-  Future<void> fetchExperiences() async {
+  Future<bool> fetchExperiences() async {
     try {
       _experiences = await client.portfolio.getExperiences();
       notifyListeners();
+      return true;
     } catch (e) {
       debugPrint('Error fetching experiences: $e');
+      return false;
     }
   }
 
@@ -205,12 +243,14 @@ class UserProvider extends ChangeNotifier {
     }
   }
 
-  Future<void> fetchEducations() async {
+  Future<bool> fetchEducations() async {
     try {
       _educations = await client.portfolio.getEducations();
       notifyListeners();
+      return true;
     } catch (e) {
       debugPrint('Error fetching educations: $e');
+      return false;
     }
   }
 }

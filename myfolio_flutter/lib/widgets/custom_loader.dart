@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'dart:math' as math;
 
 class CustomLoader extends StatefulWidget {
-  const CustomLoader({super.key});
+  const CustomLoader({super.key, this.message = 'Loading...'});
+
+  final String message;
 
   @override
   State<CustomLoader> createState() => _CustomLoaderState();
@@ -91,7 +93,7 @@ class _CustomLoaderState extends State<CustomLoader>
             ),
             const SizedBox(height: 24),
             Text(
-              'Loading...',
+              widget.message,
               style: TextStyle(
                 color: Colors.white.withValues(alpha: 0.9),
                 fontSize: 16,

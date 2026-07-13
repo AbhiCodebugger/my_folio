@@ -6,6 +6,7 @@ import 'package:myfolio_flutter/utils/app_textstyle.dart';
 import 'package:myfolio_flutter/utils/constants.dart';
 import 'package:myfolio_flutter/utils/responsive.dart';
 import 'package:myfolio_flutter/widgets/rounded_gradient_button.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ProfileOverView extends StatelessWidget {
   final User? user;
@@ -116,26 +117,32 @@ class ProfileOverView extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: (user?.socialUrls ?? [])
+                          .asMap()
+                          .entries
                           .map(
-                            (social) => Container(
-                              padding: EdgeInsets.all(isCompact ? 6 : 8),
-                              margin: const EdgeInsets.symmetric(horizontal: 6),
-                              decoration: BoxDecoration(
-                                color: colorScheme.surfaceContainerHighest,
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.black.withValues(alpha: 0.1),
-                                    blurRadius: 6,
-                                    offset: const Offset(0, 2),
-                                  ),
-                                ],
-                              ),
-                              child: Image.asset(
-                                _getSocialIconPath(
-                                  user?.socialUrls.indexOf(social) ?? 0,
+                            (entry) => InkWell(
+                              onTap: () => _launchSocialUrl(entry.value),
+                              borderRadius: BorderRadius.circular(8),
+                              child: Container(
+                                padding: EdgeInsets.all(isCompact ? 6 : 8),
+                                margin:
+                                    const EdgeInsets.symmetric(horizontal: 6),
+                                decoration: BoxDecoration(
+                                  color: colorScheme.surfaceContainerHighest,
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color:
+                                          Colors.black.withValues(alpha: 0.1),
+                                      blurRadius: 6,
+                                      offset: const Offset(0, 2),
+                                    ),
+                                  ],
                                 ),
-                                height: socialSize,
-                                width: socialSize,
+                                child: Image.asset(
+                                  _getSocialIconPath(entry.key),
+                                  height: socialSize,
+                                  width: socialSize,
+                                ),
                               ),
                             ),
                           )
@@ -246,6 +253,15 @@ class ProfileOverView extends StatelessWidget {
         return stack;
       default:
         return 'assets/icons/default.png';
+    }
+  }
+
+  Future<void> _launchSocialUrl(String url) async {
+    if (url.isEmpty) return;
+
+    final uri = Uri.parse(url);
+    if (await canLaunchUrl(uri)) {
+      await launchUrl(uri, mode: LaunchMode.externalApplication);
     }
   }
 

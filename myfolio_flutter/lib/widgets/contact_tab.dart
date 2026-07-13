@@ -586,7 +586,6 @@ class _PulsingStatusBadgeState extends State<_PulsingStatusBadge>
         border: Border.all(color: Colors.white.withValues(alpha: 0.1)),
       ),
       child: Row(
-        mainAxisSize: MainAxisSize.min,
         children: [
           SizedBox(
             width: 12,
@@ -604,11 +603,15 @@ class _PulsingStatusBadgeState extends State<_PulsingStatusBadge>
             ),
           ),
           const Gap(12),
-          Text(
-            'Currently accepting new projects',
-            style: AppTextStyle()
-                .small(color: Colors.white70)
-                .copyWith(fontWeight: FontWeight.w500),
+          Flexible(
+            child: Text(
+              'Currently accepting new projects',
+              style: AppTextStyle()
+                  .small(color: Colors.white70)
+                  .copyWith(fontWeight: FontWeight.w500),
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+            ),
           ),
         ],
       ),

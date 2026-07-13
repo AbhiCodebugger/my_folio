@@ -80,7 +80,7 @@ class AboutMeSection extends StatelessWidget {
     return ListView.separated(
       physics: const BouncingScrollPhysics(),
       itemCount: rowCount,
-      separatorBuilder: (_, __) => const Gap(20),
+      separatorBuilder: (_, _) => const Gap(20),
       itemBuilder: (context, rowIndex) {
         final left = rowIndex * 2;
         final right = left + 1;
