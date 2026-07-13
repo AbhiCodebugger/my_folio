@@ -32,7 +32,11 @@ void main() {
         expect(roles, isNotEmpty);
         final orders = roles.map((r) => r.displayOrder).toList();
         final sorted = [...orders]..sort();
-        expect(orders, sorted, reason: 'roles should be ordered by displayOrder');
+        expect(
+          orders,
+          sorted,
+          reason: 'roles should be ordered by displayOrder',
+        );
       });
     });
 
