@@ -125,14 +125,16 @@ class ProfileOverView extends StatelessWidget {
                               borderRadius: BorderRadius.circular(8),
                               child: Container(
                                 padding: EdgeInsets.all(isCompact ? 6 : 8),
-                                margin:
-                                    const EdgeInsets.symmetric(horizontal: 6),
+                                margin: const EdgeInsets.symmetric(
+                                  horizontal: 6,
+                                ),
                                 decoration: BoxDecoration(
                                   color: colorScheme.surfaceContainerHighest,
                                   boxShadow: [
                                     BoxShadow(
-                                      color:
-                                          Colors.black.withValues(alpha: 0.1),
+                                      color: Colors.black.withValues(
+                                        alpha: 0.1,
+                                      ),
                                       blurRadius: 6,
                                       offset: const Offset(0, 2),
                                     ),

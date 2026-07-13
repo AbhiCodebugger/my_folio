@@ -40,14 +40,14 @@ class TabletLayout extends StatelessWidget {
           Flexible(
             flex: 2,
             child: ProfileOverView(
-            user: user,
-            onDownload: () async {
-              final url = Uri.parse(defaultResumeUrl);
-              if (await canLaunchUrl(url)) {
-                await launchUrl(url, mode: LaunchMode.externalApplication);
-              }
-            },
-          ),
+              user: user,
+              onDownload: () async {
+                final url = Uri.parse(defaultResumeUrl);
+                if (await canLaunchUrl(url)) {
+                  await launchUrl(url, mode: LaunchMode.externalApplication);
+                }
+              },
+            ),
           ),
           const Gap(12),
           Flexible(

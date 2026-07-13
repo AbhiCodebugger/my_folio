@@ -47,8 +47,7 @@ class HomeScreen extends StatelessWidget {
                   experiences: experiences,
                 ),
               ),
-              if (vM.isLoading)
-                CustomLoader(message: vM.loadingMessage),
+              if (vM.isLoading) CustomLoader(message: vM.loadingMessage),
               if (vM.loadFailed) _ConnectionErrorOverlay(onRetry: vM.retry),
             ],
           );

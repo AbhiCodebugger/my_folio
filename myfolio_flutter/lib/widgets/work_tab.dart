@@ -79,8 +79,9 @@ class _WorkTabState extends State<WorkTab> {
                         boxShadow: _currentPage == index
                             ? [
                                 BoxShadow(
-                                  color:
-                                      const Color(0xFF00E5FF).withValues(alpha: 0.6),
+                                  color: const Color(
+                                    0xFF00E5FF,
+                                  ).withValues(alpha: 0.6),
                                   blurRadius: 10,
                                   spreadRadius: 2,
                                 ),
