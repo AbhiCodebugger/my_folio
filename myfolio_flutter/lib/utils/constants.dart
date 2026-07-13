@@ -10,9 +10,16 @@ String stack = 'assets/icons/stack.png';
 String defaultResumeUrl =
     'https://drive.google.com/file/d/1cUR-YqYjj90HceYdHSjUVWhdsGyPQhof/view?usp=sharing';
 
+const _legacyResumeUrls = {
+  'https://drive.google.com/file/d/1qIpPreb7mEQfptQi-XaRr_zyQcOx5str/view?usp=sharing',
+  'https://drive.google.com/file/d/1qIpPreb7mEQfptQi-XaRr_zyQcOx5str/view?usp=drive_link',
+};
+
 String resumeUrlFor(User? user) {
   final url = user?.resumeUrl;
-  if (url != null && url.isNotEmpty) {
+  if (url != null &&
+      url.isNotEmpty &&
+      !_legacyResumeUrls.contains(url)) {
     return url;
   }
   return defaultResumeUrl;
