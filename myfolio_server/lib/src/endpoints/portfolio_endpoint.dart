@@ -23,7 +23,7 @@ class PortfolioEndpoint extends Endpoint {
         Roles(
           title: "Mobile Engineering",
           description:
-              "5+ years building production-grade mobile applications with Flutter & Dart across iOS and Android. "
+              "6+ years building production-grade mobile applications with Flutter & Dart across iOS and Android. "
               "I architect scalable, modular codebases using clean architecture, BLoC/Provider/Riverpod state management, and platform channels. "
               "From complex animations and offline-first strategies to payment integrations and push notification pipelines — "
               "I ship polished apps that handle millions of user interactions.",
@@ -39,7 +39,7 @@ class PortfolioEndpoint extends Endpoint {
         Roles(
           title: "Backend & System Design",
           description:
-              "I design event-driven, microservice-ready backends with Serverpod, Golang"
+              "I design event-driven, microservice-ready backends with Serverpod and Golang. "
               "My stack includes PostgreSQL, Firebase, Redis, and Docker for containerised deployments with CI/CD on GitHub Actions. "
               "I focus on API design, database modelling, migration strategies, and observability — "
               "ensuring systems are resilient, horizontally scalable, and easy to reason about.",
@@ -248,7 +248,7 @@ class PortfolioEndpoint extends Endpoint {
         Experience(
           duration: 'June 2020 - Jan 2021',
           company: 'Trivy Technologies Pvt. Ltd.',
-          position: 'Flutter Intern',
+          position: 'Junior Flutter Developer',
         ),
       ];
       return await Experience.db.insert(session, experiences);
