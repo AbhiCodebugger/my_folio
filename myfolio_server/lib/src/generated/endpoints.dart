@@ -10,6 +10,7 @@
 // ignore_for_file: invalid_use_of_internal_member
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
+
 import 'package:serverpod/serverpod.dart' as _i1;
 import '../endpoints/file_endpoint.dart' as _i2;
 import '../endpoints/portfolio_endpoint.dart' as _i3;
@@ -56,24 +57,6 @@ class Endpoints extends _i1.EndpointDispatch {
               ) async =>
                   (endpoints['file'] as _i2.FileEndpoint).getResumeUrl(session),
         ),
-        'getUploadUrl': _i1.MethodConnector(
-          name: 'getUploadUrl',
-          params: {
-            'path': _i1.ParameterDescription(
-              name: 'path',
-              type: _i1.getType<String>(),
-              nullable: false,
-            ),
-          },
-          call:
-              (
-                _i1.Session session,
-                Map<String, dynamic> params,
-              ) async => (endpoints['file'] as _i2.FileEndpoint).getUploadUrl(
-                session,
-                params['path'],
-              ),
-        ),
       },
     );
     connectors['portfolio'] = _i1.EndpointConnector(
@@ -100,36 +83,6 @@ class Endpoints extends _i1.EndpointDispatch {
               ) async => (endpoints['portfolio'] as _i3.PortfolioEndpoint)
                   .getProjectList(session),
         ),
-        'createRoles': _i1.MethodConnector(
-          name: 'createRoles',
-          params: {},
-          call:
-              (
-                _i1.Session session,
-                Map<String, dynamic> params,
-              ) async => (endpoints['portfolio'] as _i3.PortfolioEndpoint)
-                  .createRoles(session),
-        ),
-        'createProjects': _i1.MethodConnector(
-          name: 'createProjects',
-          params: {},
-          call:
-              (
-                _i1.Session session,
-                Map<String, dynamic> params,
-              ) async => (endpoints['portfolio'] as _i3.PortfolioEndpoint)
-                  .createProjects(session),
-        ),
-        'createSkills': _i1.MethodConnector(
-          name: 'createSkills',
-          params: {},
-          call:
-              (
-                _i1.Session session,
-                Map<String, dynamic> params,
-              ) async => (endpoints['portfolio'] as _i3.PortfolioEndpoint)
-                  .createSkills(session),
-        ),
         'getSkills': _i1.MethodConnector(
           name: 'getSkills',
           params: {},
@@ -140,16 +93,6 @@ class Endpoints extends _i1.EndpointDispatch {
               ) async => (endpoints['portfolio'] as _i3.PortfolioEndpoint)
                   .getSkills(session),
         ),
-        'createExperiences': _i1.MethodConnector(
-          name: 'createExperiences',
-          params: {},
-          call:
-              (
-                _i1.Session session,
-                Map<String, dynamic> params,
-              ) async => (endpoints['portfolio'] as _i3.PortfolioEndpoint)
-                  .createExperiences(session),
-        ),
         'getExperiences': _i1.MethodConnector(
           name: 'getExperiences',
           params: {},
@@ -159,16 +102,6 @@ class Endpoints extends _i1.EndpointDispatch {
                 Map<String, dynamic> params,
               ) async => (endpoints['portfolio'] as _i3.PortfolioEndpoint)
                   .getExperiences(session),
-        ),
-        'createEducations': _i1.MethodConnector(
-          name: 'createEducations',
-          params: {},
-          call:
-              (
-                _i1.Session session,
-                Map<String, dynamic> params,
-              ) async => (endpoints['portfolio'] as _i3.PortfolioEndpoint)
-                  .createEducations(session),
         ),
         'getEducations': _i1.MethodConnector(
           name: 'getEducations',
@@ -195,16 +128,6 @@ class Endpoints extends _i1.EndpointDispatch {
                 Map<String, dynamic> params,
               ) async =>
                   (endpoints['user'] as _i4.UserEndpoint).getUser(session),
-        ),
-        'createUser': _i1.MethodConnector(
-          name: 'createUser',
-          params: {},
-          call:
-              (
-                _i1.Session session,
-                Map<String, dynamic> params,
-              ) async =>
-                  (endpoints['user'] as _i4.UserEndpoint).createUser(session),
         ),
       },
     );

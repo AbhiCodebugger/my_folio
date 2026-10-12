@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://abhicodebugger.github.io/my_folio/sitemap.xml

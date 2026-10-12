@@ -1,45 +1,37 @@
 # MyFolio
 
-Personal portfolio app built with Flutter (web-first) and [Serverpod](https://docs.serverpod.dev). The frontend is a responsive Flutter app; the backend is a Serverpod server backed by PostgreSQL.
+Personal portfolio, all in Dart. The public site is a statically generated [Jaspr](https://jaspr.site) site. Content lives in PostgreSQL (Neon) behind a [Serverpod](https://docs.serverpod.dev) API and is fetched once per build, so visitors get instant, crawlable HTML and never wait for the API to wake up.
 
-**Live app:** [https://abhicodebugger.github.io/my_folio/](https://abhicodebugger.github.io/my_folio/)  
+**Live site:** [https://abhicodebugger.github.io/my_folio/](https://abhicodebugger.github.io/my_folio/)  
 **API:** `https://my-folio-a91r.onrender.com`
 
 ## Monorepo structure
 
 | Package | Path | Purpose |
 |---------|------|---------|
-| `myfolio_flutter` | [myfolio_flutter/](myfolio_flutter/) | Flutter app — UI, Provider state, auth session |
-| `myfolio_server` | [myfolio_server/](myfolio_server/) | Serverpod 3.4.5 server — endpoints, Postgres, migrations |
-| `myfolio_client` | [myfolio_client/](myfolio_client/) | Generated protocol client consumed by the Flutter app |
+| `myfolio_web` | [myfolio_web/](myfolio_web/) | **Public site** — Jaspr static site, built in CI and deployed to GitHub Pages |
+| `myfolio_server` | [myfolio_server/](myfolio_server/) | Serverpod 3.4.5 server — read-only content API, Postgres, migrations, seeding |
+| `myfolio_client` | [myfolio_client/](myfolio_client/) | Generated protocol client used by the site build |
 
 ```mermaid
 flowchart LR
-  subgraph client [myfolio_flutter]
-    UI[Flutter Web UI]
-    Providers[UserProvider / ThemeProvider]
-  end
-  subgraph generated [myfolio_client]
-    Client[Client]
-  end
-  subgraph server [myfolio_server]
-    Endpoints[portfolio / user / file endpoints]
-    DB[(PostgreSQL)]
-  end
-  UI --> Providers --> Client --> Endpoints --> DB
+  DB[(Neon PostgreSQL)] --> API[Serverpod API on Render<br/>read-only endpoints]
+  API -- "myfolio_client, once per build" --> CI[GitHub Actions<br/>jaspr build]
+  CI -- "static HTML/CSS/images" --> Pages[GitHub Pages]
+  Pages --> Visitor[Visitor<br/>no API calls]
 ```
 
 ## Features
 
-- Responsive layouts for mobile, tablet, and desktop
-- Portfolio sections: roles, projects, skills, education, and experience
-- Light/dark theme toggle
-- Serverpod authentication via `serverpod_auth_idp_flutter`
-- File upload endpoint for resume and assets
+- Single-scroll, recruiter-focused page: hero, impact metrics, case studies, experience timeline, expertise, education, "how this site is built", contact
+- Static pre-rendering: full content in the HTML, works without JavaScript, no runtime backend dependency
+- SEO and sharing: meta description, canonical, Open Graph/Twitter card image, JSON-LD `Person`, `robots.txt`, `sitemap.xml`
+- Light/dark theme (follows the OS, toggle persists) and reduced-motion-aware scroll reveal
+- Read-only public API; content is seeded server-side (no public write endpoints)
 
 ## Prerequisites
 
-- Flutter **3.32+** (Dart SDK **3.8+**)
+- Dart SDK **3.10+** (for `myfolio_web`; the server needs 3.8+) and the Jaspr CLI (`dart pub global activate jaspr_cli 0.23.5`)
 - Docker (local Postgres and Redis via [myfolio_server/docker-compose.yaml](myfolio_server/docker-compose.yaml))
 - [Serverpod CLI](https://docs.serverpod.dev) (for `serverpod generate` after model or endpoint changes)
 
@@ -64,28 +56,29 @@ To stop services:
 docker compose stop
 ```
 
-### 2. Run the Flutter app (dev flavor)
+### Seeding content
+
+Portfolio content is seeded by an operator-only command, never over the public API. It is idempotent: a table that already has rows is left untouched, so it is safe to re-run.
 
 ```bash
-cd myfolio_client && flutter pub get
-cd ../myfolio_flutter && flutter pub get
-flutter run -d chrome -t lib/main_dev.dart
+cd myfolio_server
+dart bin/seed.dart --mode development --apply-migrations   # local docker DB
+dart bin/seed.dart --mode production                       # Neon (needs prod passwords.yaml)
 ```
 
-The dev entry point (`lib/main_dev.dart`) connects to the local Serverpod server by default. You can override the API URL via `assets/config.json` or `--dart-define=API_URL=...`.
+Stop any locally running server first, since the command briefly binds the same ports. After the first seed, edit content directly in the database.
 
-### Flavors and API URL resolution
+The public API is read-only: `portfolio.get*`, `user.getUser` and `file.getResumeUrl`. The former `create*` seed methods and `file.getUploadUrl` were removed, and `User.phoneNumber` is server-only (not returned by `getUser`).
 
-| Entry point | Flavor | Default API |
-|-------------|--------|-------------|
-| `lib/main_dev.dart` | `dev` | `http://localhost:8080` (or `assets/config.json`) |
-| `lib/main.dart` | `prod` | `https://my-folio-a91r.onrender.com` |
+### 2. Run the site
 
-Resolution order (see [myfolio_flutter/lib/config/environment.dart](myfolio_flutter/lib/config/environment.dart)):
+```bash
+cd myfolio_web
+dart pub get
+jaspr serve --port 8085 --dart-define=API_URL=http://localhost:8080/
+```
 
-1. `--dart-define=API_URL=...` (highest priority — used in CI builds)
-2. `assets/config.json` (`apiUrl` key) — dev flavor only
-3. Built-in flavor default
+Leave out `API_URL` to render production content. See [myfolio_web/README.md](myfolio_web/README.md) for where the copy and styles live.
 
 ### Regenerate the client after server changes
 
@@ -98,38 +91,41 @@ serverpod generate
 
 ## Build and deploy
 
-### Production web build
+### Production site build
 
 Matches the [deploy workflow](.github/workflows/deploy.yml):
 
 ```bash
-cd myfolio_flutter
-flutter build web --release -t lib/main.dart \
-  --base-href "/my_folio/" \
-  --dart-define=API_URL=https://my-folio-a91r.onrender.com
+cd myfolio_web
+jaspr build --dart-define=API_URL=https://my-folio-a91r.onrender.com
+dart run tool/check_links.dart build/jaspr /my_folio/
 ```
 
-Output is in `myfolio_flutter/build/web/`.
+Output is in `myfolio_web/build/jaspr/`. The build retries the API for up to 3 minutes while Render wakes up. If content can't be fetched, or the profile is missing, it fails and nothing is published, so the live site keeps the last good deploy.
+
+### Updating content
+
+1. Edit the rows in the Neon database (or seed a fresh database with `dart bin/seed.dart`).
+2. Run the **Build and Deploy Portfolio Site** workflow manually (Actions → *Run workflow*), or wait for the daily 03:00 UTC build.
+
+Copy that isn't in the database (positioning line, metrics, project images) lives in [myfolio_web/lib/content/site_config.dart](myfolio_web/lib/content/site_config.dart) and deploys on push.
+
+### Rollback
+
+The site is a static artifact on the `gh-pages` branch. To roll back, revert the offending commit on `main`, or re-run an earlier successful deploy workflow run. Server changes deploy independently on Render.
 
 ### Server deployment
 
 The server Docker image is defined in [myfolio_server/Dockerfile](myfolio_server/Dockerfile). It applies database migrations on startup (`--apply-migrations`).
 
-You can also build the Flutter app and copy it into the server's web directory:
-
-```bash
-cd myfolio_server
-serverpod run flutter_build
-```
-
 ### CI/CD
 
 | Workflow | Trigger | What it does |
 |----------|---------|--------------|
-| [analyze.yml](.github/workflows/analyze.yml) | push/PR to `main` | Dart analyze on `myfolio_server` |
-| [format.yml](.github/workflows/format.yml) | push/PR to `main` | Dart format check on `myfolio_server` |
-| [tests.yml](.github/workflows/tests.yml) | push/PR to `main` | Server integration tests (Docker Postgres/Redis) |
-| [deploy.yml](.github/workflows/deploy.yml) | push to `main` | Flutter web build → GitHub Pages |
+| [analyze.yml](.github/workflows/analyze.yml) | push/PR to `main` | Dart analyze on `myfolio_server` and `myfolio_web` |
+| [format.yml](.github/workflows/format.yml) | push/PR to `main` | Dart format check on `myfolio_server` and `myfolio_web` |
+| [tests.yml](.github/workflows/tests.yml) | push/PR to `main` | Server integration tests (Docker Postgres/Redis) and site unit tests |
+| [deploy.yml](.github/workflows/deploy.yml) | push to `main`, manual, daily 03:00 UTC | Jaspr static build (content fetched from the API) → link check → GitHub Pages |
 
 ## Testing
 
@@ -141,18 +137,22 @@ dart pub get
 dart test
 docker compose down -v
 
-# Flutter unit and widget tests
-cd myfolio_flutter
-flutter test
+# Site unit tests (config, content loader)
+cd myfolio_web
+dart test
 ```
 
-CI currently runs server integration tests only; Flutter tests are run locally.
+CI runs both suites.
 
 ## Project layout
 
 ```
 my_folio/
-├── myfolio_flutter/     # Flutter app
+├── myfolio_web/         # Public Jaspr static site
+│   ├── lib/content/     # site config + build-time content loader
+│   ├── lib/components/  # page sections, head/SEO, @client widgets
+│   ├── web/             # images, font, robots.txt, sitemap.xml
+│   └── tool/            # check_links.dart
 │   ├── lib/
 │   │   ├── bootstrap.dart
 │   │   ├── config/      # environment / API URL
@@ -163,6 +163,7 @@ my_folio/
 ├── myfolio_server/      # Serverpod server
 │   ├── lib/src/endpoints/
 │   ├── lib/src/models/  # .spy model definitions
+│   ├── lib/src/seed/    # idempotent content seed (bin/seed.dart)
 │   └── migrations/
 ├── myfolio_client/      # Generated protocol client
 └── .github/workflows/   # CI/CD
@@ -170,6 +171,5 @@ my_folio/
 
 ## Related docs
 
-- [Responsive design guide](myfolio_flutter/RESPONSIVE_GUIDE.md) — layout patterns used in the Flutter app
 - [Serverpod documentation](https://docs.serverpod.dev) — framework reference
 - Repository: [https://github.com/AbhiCodebugger/my_folio](https://github.com/AbhiCodebugger/my_folio)

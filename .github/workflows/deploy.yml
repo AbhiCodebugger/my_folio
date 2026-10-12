@@ -1,12 +1,24 @@
-name: Build and Deploy Flutter Web
+name: Build and Deploy Portfolio Site
 
 on:
   push:
     branches:
       - main
+  workflow_dispatch:
+  schedule:
+    # Daily rebuild so content edited in the database goes live within 24h.
+    - cron: '0 3 * * *'
 
 permissions:
   contents: write
+
+concurrency:
+  group: pages-deploy
+  cancel-in-progress: false
+
+env:
+  API_URL: https://my-folio-a91r.onrender.com
+  JASPR_CLI_VERSION: 0.23.5
 
 jobs:
   build-and-deploy:
@@ -14,24 +26,31 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Install Flutter
-        uses: subosito/flutter-action@v2
+      - uses: dart-lang/setup-dart@v1
         with:
-          channel: 'stable'
-          flutter-version: '3.32.0'
+          sdk: 3.13.2
 
       - name: Install dependencies
+        working-directory: myfolio_web
         run: |
-          cd myfolio_client && flutter pub get
-          cd ../myfolio_flutter && flutter pub get
+          dart pub get
+          dart pub global activate jaspr_cli $JASPR_CLI_VERSION
 
-      - name: Build Web
+      # Fetches content from the API once (retrying up to 3 min while Render
+      # wakes up) and pre-renders static HTML. Fails closed: if content can't
+      # be fetched, nothing is published and the last deploy stays live.
+      - name: Build static site
+        working-directory: myfolio_web
+        run: jaspr build --dart-define=API_URL=$API_URL
+
+      - name: Check links and output
+        working-directory: myfolio_web
         run: |
-          cd myfolio_flutter
-          flutter build web --release --base-href "/my_folio/" --dart-define=API_URL=https://my-folio-a91r.onrender.com
+          rm -rf build/jaspr/.dart_tool build/jaspr/.build.manifest build/jaspr/packages
+          dart run tool/check_links.dart build/jaspr /my_folio/
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./myfolio_flutter/build/web
+          publish_dir: ./myfolio_web/build/jaspr

@@ -10,6 +10,7 @@
 // ignore_for_file: invalid_use_of_internal_member
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
+
 import 'package:serverpod_client/serverpod_client.dart' as _i1;
 import 'dart:async' as _i2;
 import 'package:myfolio_client/src/protocol/roles.dart' as _i3;
@@ -38,15 +39,12 @@ class EndpointFile extends _i1.EndpointRef {
     'getResumeUrl',
     {},
   );
-
-  _i2.Future<String?> getUploadUrl(String path) =>
-      caller.callServerEndpoint<String?>(
-        'file',
-        'getUploadUrl',
-        {'path': path},
-      );
 }
 
+/// Public, read-only access to portfolio content.
+///
+/// Content is seeded server-side via `bin/seed.dart`; no write operations are
+/// exposed over RPC.
 /// {@category Endpoint}
 class EndpointPortfolio extends _i1.EndpointRef {
   EndpointPortfolio(_i1.EndpointCaller caller) : super(caller);
@@ -68,27 +66,6 @@ class EndpointPortfolio extends _i1.EndpointRef {
         {},
       );
 
-  _i2.Future<List<_i3.Roles>> createRoles() =>
-      caller.callServerEndpoint<List<_i3.Roles>>(
-        'portfolio',
-        'createRoles',
-        {},
-      );
-
-  _i2.Future<List<_i4.Project>> createProjects() =>
-      caller.callServerEndpoint<List<_i4.Project>>(
-        'portfolio',
-        'createProjects',
-        {},
-      );
-
-  _i2.Future<List<_i5.Skill>> createSkills() =>
-      caller.callServerEndpoint<List<_i5.Skill>>(
-        'portfolio',
-        'createSkills',
-        {},
-      );
-
   _i2.Future<List<_i5.Skill>> getSkills() =>
       caller.callServerEndpoint<List<_i5.Skill>>(
         'portfolio',
@@ -96,24 +73,10 @@ class EndpointPortfolio extends _i1.EndpointRef {
         {},
       );
 
-  _i2.Future<List<_i6.Experience>> createExperiences() =>
-      caller.callServerEndpoint<List<_i6.Experience>>(
-        'portfolio',
-        'createExperiences',
-        {},
-      );
-
   _i2.Future<List<_i6.Experience>> getExperiences() =>
       caller.callServerEndpoint<List<_i6.Experience>>(
         'portfolio',
         'getExperiences',
-        {},
-      );
-
-  _i2.Future<List<_i7.Education>> createEducations() =>
-      caller.callServerEndpoint<List<_i7.Education>>(
-        'portfolio',
-        'createEducations',
         {},
       );
 
@@ -135,12 +98,6 @@ class EndpointUser extends _i1.EndpointRef {
   _i2.Future<_i8.User?> getUser() => caller.callServerEndpoint<_i8.User?>(
     'user',
     'getUser',
-    {},
-  );
-
-  _i2.Future<void> createUser() => caller.callServerEndpoint<void>(
-    'user',
-    'createUser',
     {},
   );
 }

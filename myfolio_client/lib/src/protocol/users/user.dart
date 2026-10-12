@@ -10,6 +10,7 @@
 // ignore_for_file: invalid_use_of_internal_member
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
+
 import 'package:serverpod_client/serverpod_client.dart' as _i1;
 import 'package:myfolio_client/src/protocol/protocol.dart' as _i2;
 
@@ -21,7 +22,6 @@ abstract class User implements _i1.SerializableModel {
     required this.summary,
     required this.imagePath,
     required this.socialUrls,
-    required this.phoneNumber,
     required this.email,
     required this.location,
     required this.resumeUrl,
@@ -34,7 +34,6 @@ abstract class User implements _i1.SerializableModel {
     required String summary,
     required String imagePath,
     required List<String> socialUrls,
-    required String phoneNumber,
     required String email,
     required String location,
     required String resumeUrl,
@@ -50,7 +49,6 @@ abstract class User implements _i1.SerializableModel {
       socialUrls: _i2.Protocol().deserialize<List<String>>(
         jsonSerialization['socialUrls'],
       ),
-      phoneNumber: jsonSerialization['phoneNumber'] as String,
       email: jsonSerialization['email'] as String,
       location: jsonSerialization['location'] as String,
       resumeUrl: jsonSerialization['resumeUrl'] as String,
@@ -72,8 +70,6 @@ abstract class User implements _i1.SerializableModel {
 
   List<String> socialUrls;
 
-  String phoneNumber;
-
   String email;
 
   String location;
@@ -90,7 +86,6 @@ abstract class User implements _i1.SerializableModel {
     String? summary,
     String? imagePath,
     List<String>? socialUrls,
-    String? phoneNumber,
     String? email,
     String? location,
     String? resumeUrl,
@@ -105,7 +100,6 @@ abstract class User implements _i1.SerializableModel {
       'summary': summary,
       'imagePath': imagePath,
       'socialUrls': socialUrls.toJson(),
-      'phoneNumber': phoneNumber,
       'email': email,
       'location': location,
       'resumeUrl': resumeUrl,
@@ -128,7 +122,6 @@ class _UserImpl extends User {
     required String summary,
     required String imagePath,
     required List<String> socialUrls,
-    required String phoneNumber,
     required String email,
     required String location,
     required String resumeUrl,
@@ -139,7 +132,6 @@ class _UserImpl extends User {
          summary: summary,
          imagePath: imagePath,
          socialUrls: socialUrls,
-         phoneNumber: phoneNumber,
          email: email,
          location: location,
          resumeUrl: resumeUrl,
@@ -156,7 +148,6 @@ class _UserImpl extends User {
     String? summary,
     String? imagePath,
     List<String>? socialUrls,
-    String? phoneNumber,
     String? email,
     String? location,
     String? resumeUrl,
@@ -168,7 +159,6 @@ class _UserImpl extends User {
       summary: summary ?? this.summary,
       imagePath: imagePath ?? this.imagePath,
       socialUrls: socialUrls ?? this.socialUrls.map((e0) => e0).toList(),
-      phoneNumber: phoneNumber ?? this.phoneNumber,
       email: email ?? this.email,
       location: location ?? this.location,
       resumeUrl: resumeUrl ?? this.resumeUrl,

@@ -10,6 +10,7 @@
 // ignore_for_file: invalid_use_of_internal_member
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
+
 import 'package:serverpod/serverpod.dart' as _i1;
 import 'package:myfolio_server/src/generated/protocol.dart' as _i2;
 
@@ -21,7 +22,7 @@ abstract class User implements _i1.TableRow<int?>, _i1.ProtocolSerialization {
     required this.summary,
     required this.imagePath,
     required this.socialUrls,
-    required this.phoneNumber,
+    this.phoneNumber,
     required this.email,
     required this.location,
     required this.resumeUrl,
@@ -37,7 +38,7 @@ abstract class User implements _i1.TableRow<int?>, _i1.ProtocolSerialization {
     required String summary,
     required String imagePath,
     required List<String> socialUrls,
-    required String phoneNumber,
+    String? phoneNumber,
     required String email,
     required String location,
     required String resumeUrl,
@@ -55,7 +56,7 @@ abstract class User implements _i1.TableRow<int?>, _i1.ProtocolSerialization {
       socialUrls: _i2.Protocol().deserialize<List<String>>(
         jsonSerialization['socialUrls'],
       ),
-      phoneNumber: jsonSerialization['phoneNumber'] as String,
+      phoneNumber: jsonSerialization['phoneNumber'] as String?,
       email: jsonSerialization['email'] as String,
       location: jsonSerialization['location'] as String,
       resumeUrl: jsonSerialization['resumeUrl'] as String,
@@ -85,7 +86,7 @@ abstract class User implements _i1.TableRow<int?>, _i1.ProtocolSerialization {
 
   List<String> socialUrls;
 
-  String phoneNumber;
+  String? phoneNumber;
 
   String email;
 
@@ -127,7 +128,7 @@ abstract class User implements _i1.TableRow<int?>, _i1.ProtocolSerialization {
       'summary': summary,
       'imagePath': imagePath,
       'socialUrls': socialUrls.toJson(),
-      'phoneNumber': phoneNumber,
+      if (phoneNumber != null) 'phoneNumber': phoneNumber,
       'email': email,
       'location': location,
       'resumeUrl': resumeUrl,
@@ -146,7 +147,6 @@ abstract class User implements _i1.TableRow<int?>, _i1.ProtocolSerialization {
       'summary': summary,
       'imagePath': imagePath,
       'socialUrls': socialUrls.toJson(),
-      'phoneNumber': phoneNumber,
       'email': email,
       'location': location,
       'resumeUrl': resumeUrl,
@@ -193,7 +193,7 @@ class _UserImpl extends User {
     required String summary,
     required String imagePath,
     required List<String> socialUrls,
-    required String phoneNumber,
+    String? phoneNumber,
     required String email,
     required String location,
     required String resumeUrl,
@@ -225,7 +225,7 @@ class _UserImpl extends User {
     String? summary,
     String? imagePath,
     List<String>? socialUrls,
-    String? phoneNumber,
+    Object? phoneNumber = _Undefined,
     String? email,
     String? location,
     String? resumeUrl,
@@ -239,7 +239,7 @@ class _UserImpl extends User {
       summary: summary ?? this.summary,
       imagePath: imagePath ?? this.imagePath,
       socialUrls: socialUrls ?? this.socialUrls.map((e0) => e0).toList(),
-      phoneNumber: phoneNumber ?? this.phoneNumber,
+      phoneNumber: phoneNumber is String? ? phoneNumber : this.phoneNumber,
       email: email ?? this.email,
       location: location ?? this.location,
       resumeUrl: resumeUrl ?? this.resumeUrl,
@@ -278,7 +278,7 @@ class UserUpdateTable extends _i1.UpdateTable<UserTable> {
         value,
       );
 
-  _i1.ColumnValue<String, String> phoneNumber(String value) => _i1.ColumnValue(
+  _i1.ColumnValue<String, String> phoneNumber(String? value) => _i1.ColumnValue(
     table.phoneNumber,
     value,
   );
