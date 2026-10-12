@@ -1,38 +1,686 @@
 <!DOCTYPE html>
-<html>
-<head>
-  <!--
-    If you are serving your web app in a path other than the root, change the
-    href value below to reflect the base path you are serving from.
-
-    The path provided below has to start and end with a slash "/" in order for
-    it to work correctly.
-
-    For more details:
-    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/base
-
-    This is a placeholder for base href that will be replaced by the value of
-    the `--base-href` argument provided to `flutter build`.
-  -->
-  <base href="/my_folio/">
-
-  <meta charset="UTF-8">
-  <meta content="IE=Edge" http-equiv="X-UA-Compatible">
-  <meta name="description" content="A new Flutter project.">
-
-  <!-- iOS meta tags & icons -->
-  <meta name="mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black">
-  <meta name="apple-mobile-web-app-title" content="myfolio_flutter">
-  <link rel="apple-touch-icon" href="icons/Icon-192.png">
-
-  <!-- Favicon -->
-  <link rel="icon" type="image/png" href="favicon.png"/>
-
-  <title>myfolio_flutter</title>
-  <link rel="manifest" href="manifest.json">
-</head>
-<body>
-  <script src="flutter_bootstrap.js" async></script>
-</body>
+<html lang="en">
+  <head>
+    <base href="/my_folio/"/>
+    <meta charset="utf-8"/>
+    <script>
+      (function(){var d=document.documentElement;try{var t=localStorage.getItem('theme');if(t==='light'||t==='dark'){d.setAttribute('data-theme',t)}else if(window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches){d.setAttribute('data-theme','dark')}}catch(e){}if('IntersectionObserver' in window){d.classList.add('js')}})();
+    </script>
+    <meta name="description" content="Senior Flutter &amp; mobile engineer with 6+ years building production iOS and Android apps, scalable architecture and Dart backends. Open to senior mobile roles."/>
+    <meta name="author" content="Abhinav Ranjan"/>
+    <meta name="theme-color" content="#4338ca"/>
+    <link href="https://abhicodebugger.github.io/my_folio/" rel="canonical"/>
+    <link href="/my_folio/favicon.png" rel="icon" type="image/png"/>
+    <link href="/my_folio/images/icon-192.png" rel="apple-touch-icon"/>
+    <link crossorigin href="/my_folio/fonts/inter-var-latin.woff2" rel="preload" type="font/woff2" as="font"/>
+    <link fetchpriority="high" href="/my_folio/images/profile.webp" rel="preload" as="image"/>
+    <meta property="og:type" content="profile"/>
+    <meta property="og:site_name" content="Abhinav Ranjan"/>
+    <meta property="og:title" content="Abhinav Ranjan — Senior Flutter Developer"/>
+    <meta property="og:description" content="Senior Flutter &amp; mobile engineer with 6+ years building production iOS and Android apps, scalable architecture and Dart backends. Open to senior mobile roles."/>
+    <meta property="og:url" content="https://abhicodebugger.github.io/my_folio/"/>
+    <meta property="og:image" content="https://abhicodebugger.github.io/my_folio/images/og.png"/>
+    <meta property="og:image:width" content="1200"/>
+    <meta property="og:image:height" content="630"/>
+    <meta property="og:image:alt" content="Abhinav Ranjan, Senior Flutter Developer"/>
+    <meta property="profile:first_name" content="Abhinav"/>
+    <meta property="profile:last_name" content="Ranjan"/>
+    <meta name="twitter:card" content="summary_large_image"/>
+    <meta name="twitter:title" content="Abhinav Ranjan — Senior Flutter Developer"/>
+    <meta name="twitter:description" content="Senior Flutter &amp; mobile engineer with 6+ years building production iOS and Android apps, scalable architecture and Dart backends. Open to senior mobile roles."/>
+    <meta name="twitter:image" content="https://abhicodebugger.github.io/my_folio/images/og.png"/>
+    <script type="application/ld+json">
+      {"@context":"https://schema.org","@type":"Person","name":"Abhinav Ranjan","jobTitle":"Senior Flutter Developer","description":"Senior Mobile Engineer with deep expertise in Flutter, architecture, and system design. I focus on building fast, reliable cross-platform applications and shaping technical direction from idea to delivery. I use AI-assisted development tools to speed up prototyping, improve code quality, and streamline everyday engineering work. I enjoy helping teams work more effectively and ensuring the product is built on a strong, scalable foundation.","url":"https://abhicodebugger.github.io/my_folio/","image":"https://abhicodebugger.github.io/my_folio/images/profile.webp","email":"mailto:ranjansme12@gmail.com","address":{"@type":"PostalAddress","addressLocality":"Noida, India"},"sameAs":["https://www.linkedin.com/in/abhinav-ranjan-78589aa3/","https://github.com/AbhiCodebugger","https://stackoverflow.com/users/14939199/abhinav"],"knowsAbout":["Flutter & Dart","Architect","Version control","Android/iOS","AI Orchestration","Firebase","App Security","CI/CD","MVVM","BloC/Provider/Riverpod","System Design"]}
+    </script>
+    <style>
+      @font-face {
+        font-family: "Inter";
+        src: url("/my_folio/fonts/inter-var-latin.woff2") format("woff2");
+        font-weight: 100 900;
+        font-style: normal;
+        font-display: swap;
+      }
+      
+      :root {
+        --bg: #f7f8fb;
+        --surface: #ffffff;
+        --surface-2: #f1f4f9;
+        --text: #0f172a;
+        --muted: #475569;
+        --border: #e2e8f0;
+        --accent: #4338ca;
+        --accent-contrast: #ffffff;
+        --accent-soft: #eef2ff;
+        --ring: #6366f1;
+        --hero-glow: rgba(99, 102, 241, 0.16);
+        --shadow: 0 1px 2px rgba(15, 23, 42, 0.06), 0 8px 24px rgba(15, 23, 42, 0.06);
+        --radius: 16px;
+        --container: 1120px;
+        --header-h: 64px;
+        color-scheme: light;
+      }
+      
+      :root[data-theme="dark"] {
+        --bg: #0b1220;
+        --surface: #111a2e;
+        --surface-2: #16213a;
+        --text: #e7ecf5;
+        --muted: #a3afc4;
+        --border: #22304d;
+        --accent: #a5b4fc;
+        --accent-contrast: #0b1220;
+        --accent-soft: #1c2650;
+        --ring: #a5b4fc;
+        --hero-glow: rgba(99, 102, 241, 0.22);
+        --shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 8px 24px rgba(0, 0, 0, 0.25);
+        color-scheme: dark;
+      }
+      
+      @media (prefers-color-scheme: dark) {
+        :root:not([data-theme]) {
+          --bg: #0b1220;
+          --surface: #111a2e;
+          --surface-2: #16213a;
+          --text: #e7ecf5;
+          --muted: #a3afc4;
+          --border: #22304d;
+          --accent: #a5b4fc;
+          --accent-contrast: #0b1220;
+          --accent-soft: #1c2650;
+          --ring: #a5b4fc;
+          --hero-glow: rgba(99, 102, 241, 0.22);
+          color-scheme: dark;
+        }
+      }
+      
+      *, *::before, *::after { box-sizing: border-box; }
+      html { scroll-behavior: smooth; scroll-padding-top: calc(var(--header-h) + 16px); -webkit-text-size-adjust: 100%; }
+      @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--text);
+        font-family: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+        font-size: 1.0625rem;
+        line-height: 1.65;
+        -webkit-font-smoothing: antialiased;
+        overflow-x: hidden;
+      }
+      img, svg { max-width: 100%; height: auto; display: block; }
+      a { color: var(--accent); text-underline-offset: 3px; }
+      h1, h2, h3 { line-height: 1.2; letter-spacing: -0.02em; margin: 0; }
+      p { margin: 0; }
+      ul, ol { margin: 0; padding: 0; list-style: none; }
+      :focus-visible { outline: 3px solid var(--ring); outline-offset: 3px; border-radius: 6px; }
+      
+      .visually-hidden {
+        position: absolute !important; width: 1px; height: 1px; padding: 0; margin: -1px;
+        overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+      }
+      .skip-link {
+        position: absolute; left: 16px; top: -48px; z-index: 100;
+        background: var(--accent); color: var(--accent-contrast);
+        padding: 8px 14px; border-radius: 8px; font-weight: 600; text-decoration: none;
+      }
+      .skip-link:focus { top: 12px; }
+      
+      .container { width: 100%; max-width: var(--container); margin: 0 auto; padding: 0 20px; }
+      .section { padding: 88px 0; }
+      .section-alt { background: var(--surface-2); }
+      .eyebrow {
+        display: inline-block; font-size: 0.8rem; font-weight: 700; letter-spacing: 0.14em;
+        text-transform: uppercase; color: var(--accent); margin-bottom: 10px;
+      }
+      .section-title { font-size: clamp(1.75rem, 3.2vw, 2.4rem); font-weight: 800; }
+      .section-lead { color: var(--muted); max-width: 680px; margin-top: 12px; }
+      .section-head { margin-bottom: 40px; }
+      
+      /* Header */
+      .site-header {
+        position: sticky; top: 0; z-index: 50; height: var(--header-h);
+        background: color-mix(in srgb, var(--bg) 82%, transparent);
+        backdrop-filter: saturate(180%) blur(12px);
+        -webkit-backdrop-filter: saturate(180%) blur(12px);
+        border-bottom: 1px solid var(--border);
+      }
+      .site-header .container { display: flex; align-items: center; justify-content: space-between; height: 100%; gap: 16px; }
+      .brand { font-weight: 800; color: var(--text); text-decoration: none; letter-spacing: -0.02em; font-size: 1.1rem; }
+      .brand span { color: var(--accent); }
+      .header-actions, .site-nav { display: flex; align-items: center; gap: 8px; }
+      .nav-list { display: flex; gap: 4px; }
+      .nav-list a {
+        color: var(--muted); text-decoration: none; font-size: 0.95rem; font-weight: 500;
+        padding: 8px 12px; border-radius: 8px;
+      }
+      .nav-list a:hover { color: var(--text); background: var(--surface-2); }
+      .icon-btn {
+        display: inline-flex; align-items: center; justify-content: center;
+        width: 40px; height: 40px; border-radius: 10px; cursor: pointer;
+        border: 1px solid var(--border); background: var(--surface); color: var(--text);
+      }
+      .icon-btn:hover { background: var(--surface-2); }
+      .icon-btn svg { width: 20px; height: 20px; }
+      .theme-toggle .icon-sun { display: none; }
+      :root[data-theme="dark"] .theme-toggle .icon-sun { display: block; }
+      :root[data-theme="dark"] .theme-toggle .icon-moon { display: none; }
+      .menu-btn { display: none; }
+      
+      @media (max-width: 599px) {
+        .menu-btn { display: inline-flex; }
+        .nav-list {
+          display: none; position: absolute; top: var(--header-h); left: 0; right: 0;
+          flex-direction: column; gap: 0; padding: 8px 20px 16px;
+          background: var(--bg); border-bottom: 1px solid var(--border); box-shadow: var(--shadow);
+        }
+        .site-nav.open .nav-list { display: flex; }
+        .nav-list a { display: block; padding: 12px 8px; font-size: 1rem; }
+      }
+      @media (min-width: 600px) and (max-width: 1023px) {
+        .nav-list a { padding: 8px; font-size: 0.9rem; }
+      }
+      
+      /* Buttons */
+      .btn {
+        display: inline-flex; align-items: center; gap: 8px; justify-content: center;
+        padding: 12px 20px; border-radius: 12px; font-weight: 600; font-size: 1rem;
+        text-decoration: none; border: 1px solid transparent; transition: transform .15s ease, box-shadow .15s ease;
+      }
+      .btn svg { width: 18px; height: 18px; }
+      .btn-primary { background: var(--accent); color: var(--accent-contrast); box-shadow: var(--shadow); }
+      .btn-primary:hover { transform: translateY(-1px); }
+      .btn-secondary { background: var(--surface); color: var(--text); border-color: var(--border); }
+      .btn-secondary:hover { background: var(--surface-2); }
+      
+      /* Hero */
+      .hero { position: relative; padding: 72px 0 56px; overflow: hidden; }
+      .hero::before {
+        content: ""; position: absolute; inset: -20% -10% auto auto; width: 720px; height: 720px;
+        background: radial-gradient(closest-side, var(--hero-glow), transparent); pointer-events: none;
+      }
+      .hero-grid { position: relative; display: grid; gap: 40px; align-items: center; }
+      .hero h1 { font-size: clamp(2.4rem, 6vw, 4rem); font-weight: 800; }
+      .hero-title { font-size: clamp(1.15rem, 2.2vw, 1.4rem); font-weight: 600; color: var(--accent); margin-top: 8px; }
+      .hero-positioning { font-size: clamp(1.15rem, 2vw, 1.35rem); margin-top: 20px; max-width: 620px; }
+      .hero-summary { color: var(--muted); margin-top: 14px; max-width: 620px; }
+      .hero-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 18px; margin-top: 18px; color: var(--muted); font-size: 0.95rem; }
+      .hero-meta svg { width: 18px; height: 18px; display: inline-block; vertical-align: -3px; margin-right: 6px; }
+      .hero-ctas { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
+      .social { display: flex; flex-wrap: wrap; gap: 8px 16px; }
+      .social a { color: var(--muted); font-weight: 500; text-decoration: none; display: inline-flex; align-items: center; gap: 6px; }
+      .social a:hover { color: var(--text); text-decoration: underline; }
+      .social svg { width: 18px; height: 18px; }
+      .hero-photo {
+        justify-self: center; width: min(320px, 70vw); aspect-ratio: 1; border-radius: 50%; padding: 6px;
+        background: linear-gradient(135deg, var(--accent), #0ea5e9);
+      }
+      .hero-photo img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 22%; border-radius: 50%; border: 4px solid var(--bg); }
+      @media (min-width: 1024px) {
+        .hero { padding: 96px 0 72px; }
+        .hero-grid { grid-template-columns: 1.5fr 1fr; }
+      }
+      @media (max-width: 1023px) { .hero-photo { order: -1; width: min(220px, 56vw); } }
+      
+      /* Metrics */
+      .metrics { padding: 0 0 56px; }
+      .metrics-grid {
+        display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1px;
+        background: var(--border); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden;
+      }
+      .metric { background: var(--surface); padding: 22px 20px; }
+      .metric-value { font-size: clamp(1.6rem, 3vw, 2.2rem); font-weight: 800; letter-spacing: -0.03em; }
+      .metric-label { color: var(--muted); font-size: 0.92rem; line-height: 1.45; margin-top: 4px; }
+      @media (min-width: 1024px) { .metrics-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+      
+      /* Projects */
+      .projects { display: grid; gap: 28px; }
+      .case {
+        display: grid; background: var(--surface); border: 1px solid var(--border);
+        border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow);
+      }
+      .case-media { background: var(--surface-2); aspect-ratio: 16 / 10; overflow: hidden; }
+      .case-media img { width: 100%; height: 100%; object-fit: cover; }
+      .case-body { padding: 24px; display: flex; flex-direction: column; gap: 14px; }
+      .case-index { font-size: 0.8rem; font-weight: 700; color: var(--accent); letter-spacing: 0.12em; }
+      .case h3 { font-size: 1.4rem; font-weight: 700; }
+      .case p { color: var(--muted); }
+      .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+      .chip {
+        font-size: 0.82rem; font-weight: 600; padding: 4px 10px; border-radius: 999px;
+        background: var(--accent-soft); color: var(--accent);
+      }
+      .case-link { font-weight: 600; align-self: flex-start; }
+      @media (min-width: 1024px) {
+        .case { grid-template-columns: 1fr 1.1fr; }
+        .case-media { aspect-ratio: auto; min-height: 100%; }
+        .case:nth-child(even) .case-media { order: 2; }
+        .case-body { padding: 36px; }
+      }
+      
+      /* Experience timeline */
+      .timeline { position: relative; display: grid; gap: 20px; padding-left: 28px; }
+      .timeline::before { content: ""; position: absolute; left: 7px; top: 8px; bottom: 8px; width: 2px; background: var(--border); }
+      .timeline-item { position: relative; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px 22px; }
+      .timeline-item::before {
+        content: ""; position: absolute; left: -28px; top: 26px; width: 16px; height: 16px; border-radius: 50%;
+        background: var(--bg); border: 3px solid var(--accent);
+      }
+      .timeline-item:first-child::before { background: var(--accent); }
+      .timeline-item h3 { font-size: 1.15rem; font-weight: 700; }
+      .timeline-company { font-weight: 600; color: var(--text); }
+      .timeline-duration { color: var(--muted); font-size: 0.92rem; }
+      @media (min-width: 600px) {
+        .timeline-row { display: flex; justify-content: space-between; gap: 16px; align-items: baseline; }
+      }
+      
+      /* Skills & expertise */
+      .roles { display: grid; gap: 16px; margin-bottom: 36px; }
+      .role { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 22px; }
+      .role h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 8px; }
+      .role p { color: var(--muted); font-size: 0.96rem; }
+      @media (min-width: 600px) { .roles { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+      .skill-list { display: flex; flex-wrap: wrap; gap: 10px; }
+      .skill-list li {
+        padding: 8px 14px; border-radius: 10px; background: var(--surface); border: 1px solid var(--border);
+        font-weight: 600; font-size: 0.95rem;
+      }
+      
+      /* Education */
+      .edu-list { display: grid; gap: 16px; }
+      .edu { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px 22px; }
+      .edu h3 { font-size: 1.1rem; font-weight: 700; }
+      .edu-institution { color: var(--text); font-weight: 500; }
+      .edu-duration { color: var(--muted); font-size: 0.92rem; }
+      @media (min-width: 600px) { .edu-list { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+      
+      /* Architecture */
+      .arch { display: grid; gap: 32px; align-items: center; }
+      .arch-diagram { margin: 0; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; color: var(--text); }
+      .arch-diagram .node { fill: var(--surface-2); stroke: var(--border); stroke-width: 1.5; }
+      .arch-diagram .node-accent { fill: var(--accent-soft); stroke: var(--accent); stroke-width: 1.5; }
+      .arch-diagram .label { fill: var(--text); font: 600 14px "Inter", system-ui, sans-serif; }
+      .arch-diagram .sub { fill: var(--muted); font: 500 12px "Inter", system-ui, sans-serif; }
+      .arch-diagram .edge { stroke: var(--muted); stroke-width: 1.5; fill: none; }
+      .arch-diagram .edge-label { fill: var(--muted); font: 500 11px "Inter", system-ui, sans-serif; }
+      .arch-diagram .arrow { fill: var(--muted); }
+      .arch-points { display: grid; gap: 12px; margin-top: 20px; }
+      .arch-points li { position: relative; padding-left: 26px; color: var(--muted); }
+      .arch-points li::before {
+        content: ""; position: absolute; left: 0; top: 0.55em; width: 12px; height: 12px; border-radius: 4px; background: var(--accent);
+      }
+      @media (min-width: 1024px) { .arch { grid-template-columns: 1fr 1.2fr; } }
+      
+      /* Contact */
+      .contact-card {
+        background: var(--surface); border: 1px solid var(--border); border-radius: 24px; box-shadow: var(--shadow);
+        padding: clamp(28px, 5vw, 56px); text-align: center;
+      }
+      .contact-card .section-lead { margin-left: auto; margin-right: auto; }
+      .contact-email { display: inline-block; margin-top: 28px; font-size: clamp(1.15rem, 3.4vw, 1.8rem); font-weight: 700; word-break: break-all; }
+      .contact-card .hero-ctas, .contact-card .social { justify-content: center; }
+      .contact-card .social { margin-top: 24px; }
+      
+      /* Footer */
+      .site-footer { border-top: 1px solid var(--border); padding: 28px 0; color: var(--muted); font-size: 0.92rem; }
+      .site-footer .container { display: flex; flex-wrap: wrap; gap: 8px 24px; justify-content: space-between; }
+      .site-footer a { color: var(--muted); }
+      
+      /* Scroll reveal: only when JS is active and the visitor allows motion. */
+      @media (prefers-reduced-motion: no-preference) {
+        .js .reveal { opacity: 0; transform: translateY(18px); transition: opacity .6s ease, transform .6s ease; }
+        .js .reveal.revealed { opacity: 1; transform: none; }
+      }
+      
+    </style>
+    <!--$-->
+    <title>Abhinav Ranjan — Senior Flutter Developer</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <!--/-->
+    <script src="main.client.dart.js" defer></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="site-header">
+      <div class="container">
+        <a class="brand" aria-label="Abhinav Ranjan — back to top" href="#top">Abhinav<span> Ranjan</span></a>
+        <div class="header-actions">
+          <!--@mobile_nav-->
+          <nav class="site-nav" aria-label="Primary">
+            <ul id="nav-list" class="nav-list">
+              <li><a href="#projects">Projects</a></li>
+              <li><a href="#experience">Experience</a></li>
+              <li><a href="#skills">Skills</a></li>
+              <li><a href="#education">Education</a></li>
+              <li><a href="#architecture">This site</a></li>
+              <li><a href="#contact">Contact</a></li>
+            </ul>
+            <button class="icon-btn menu-btn" type="button" aria-controls="nav-list" aria-expanded="false" aria-label="Open menu">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" focusable="false"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+            </button>
+          </nav>
+          <!--/@mobile_nav-->
+          <!--@theme_toggle-->
+          <button class="icon-btn theme-toggle" type="button" aria-label="Toggle dark mode" title="Toggle dark mode">
+            <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+            <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+          </button>
+          <!--/@theme_toggle-->
+        </div>
+      </div>
+    </header>
+    <main id="main">
+      <div id="top"></div>
+      <section class="hero" aria-labelledby="hero-title">
+        <div class="container hero-grid">
+          <div>
+            <h1 id="hero-title">Abhinav Ranjan</h1>
+            <p class="hero-title">Senior Flutter Developer</p>
+            <p class="hero-positioning">
+              I design and ship fast, reliable Flutter apps — from architecture to the App Store — and the Dart backends that power them.
+            </p>
+            <p class="hero-summary">
+              Senior Mobile Engineer with deep expertise in Flutter, architecture, and system design. I focus on building fast, reliable cross-platform applications and shaping technical direction from idea to delivery. I use AI-assisted development tools to speed up prototyping, improve code quality, and streamline everyday engineering work. I enjoy helping teams work more effectively and ensuring the product is built on a strong, scalable foundation.
+            </p>
+            <div class="hero-meta">
+              <span><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>Noida, India</span>
+              <div class="social">
+                <a rel="noopener noreferrer me" href="https://www.linkedin.com/in/abhinav-ranjan-78589aa3/" target="_blank">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+                  LinkedIn
+                </a>
+                <a rel="noopener noreferrer me" href="https://github.com/AbhiCodebugger" target="_blank">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
+                  GitHub
+                </a>
+                <a rel="noopener noreferrer me" href="https://stackoverflow.com/users/14939199/abhinav" target="_blank">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 15v5h16v-5"/><path d="M8 16h8"/><path d="m8.5 12.5 7.6 1.6"/><path d="m9.9 8.6 7 3.6"/><path d="m12.4 5 5.6 6"/></svg>
+                  Stack Overflow
+                </a>
+              </div>
+            </div>
+            <div class="hero-ctas">
+              <a class="btn btn-primary" rel="noopener noreferrer" href="https://drive.google.com/file/d/1gWePvVX6zjmz-nsWj2ERyamFeuu5xh8U/view?usp=sharing" target="_blank">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                Download résumé
+              </a>
+              <a class="btn btn-secondary" href="#contact">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/></svg>
+                Contact me
+              </a>
+            </div>
+          </div>
+          <div class="hero-photo">
+            <img fetchpriority="high" decoding="async" alt="Portrait of Abhinav Ranjan" width="640" height="786" src="/my_folio/images/profile.webp"/>
+          </div>
+        </div>
+      </section>
+      <section class="metrics" aria-label="Highlights">
+        <div class="container">
+          <ul class="metrics-grid">
+            <li class="metric">
+              <div class="metric-value">6+</div><div class="metric-label">years shipping production mobile apps</div>
+            </li>
+            <li class="metric">
+              <div class="metric-value">1,000+</div><div class="metric-label">daily active drivers on a logistics app I led</div>
+            </li>
+            <li class="metric">
+              <div class="metric-value">10K+</div><div class="metric-label">articles/day ingested by a real-time news platform</div>
+            </li>
+            <li class="metric">
+              <div class="metric-value">60 fps</div><div class="metric-label">scroll performance as a non-negotiable</div>
+            </li>
+          </ul>
+        </div>
+      </section>
+      <section id="projects" class="section" aria-labelledby="projects-title">
+        <div class="container reveal">
+          <div class="section-head">
+            <span class="eyebrow">Selected work</span>
+            <h2 id="projects-title" class="section-title">Case studies</h2>
+            <p class="section-lead">
+              Production apps I designed, built and shipped — the problems, the approach, and the stack behind them.
+            </p>
+          </div>
+          <div class="projects">
+            <article class="case">
+              <div class="case-media">
+                <img decoding="async" alt="Illustration for Market Intelligence Platform" width="1200" height="800" loading="lazy" src="/my_folio/images/news.webp"/>
+              </div>
+              <div class="case-body">
+                <span class="case-index">01</span>
+                <h3>Market Intelligence Platform</h3>
+                <p>
+                  Architected a real-time news aggregation engine that ingests 10K+ articles/day via WebSocket streams. Implemented NLP-powered summarisation to distil content into 60-word briefs. Built a custom infinite-scroll feed with Hero animations and skeleton loading for sub-200ms perceived latency. Designed an offline-first caching layer with Hive, syncing deltas over background isolates.
+                </p>
+                <ul class="chips" aria-label="Tech stack">
+                  <li class="chip">Flutter</li>
+                  <li class="chip">Dart</li>
+                  <li class="chip">Node.js</li>
+                  <li class="chip">Firebase</li>
+                  <li class="chip">NLP</li>
+                </ul>
+              </div>
+            </article>
+            <article class="case">
+              <div class="case-media">
+                <img decoding="async" alt="Illustration for Freight &amp; Logistics Suite" width="1200" height="900" loading="lazy" src="/my_folio/images/logistic.webp"/>
+              </div>
+              <div class="case-body">
+                <span class="case-index">02</span>
+                <h3>Freight &amp; Logistics Suite</h3>
+                <p>
+                  Led development of a last-mile delivery platform serving 1000+ daily active drivers. Integrated Google Maps SDK with custom polyline routing and route optimization techniques using HERE SDK. Implemented SignalR push events to update the driver app in real-time. Offline support with Hive and stream to sync data.
+                </p>
+                <ul class="chips" aria-label="Tech stack"><li class="chip">Flutter</li><li class="chip">Dart</li><li class="chip">.NET</li></ul>
+              </div>
+            </article>
+            <article class="case">
+              <div class="case-media">
+                <img decoding="async" alt="Illustration for Social Engagement Platform" width="1200" height="900" loading="lazy" src="/my_folio/images/social.webp"/>
+              </div>
+              <div class="case-body">
+                <span class="case-index">03</span>
+                <h3>Social Engagement Platform</h3>
+                <p>
+                  Engineered a content-sharing app with real-time chat (WebSocket), threaded comments, and media uploads to S3-compatible storage. Implemented a feed algorithm using a fan-out-on-write pattern for instant post delivery to followers. Built a modular notification system (push, in-app, email digest) with Firebase Cloud Messaging. Achieved 60fps scroll performance via lazy image loading and widget recycling.
+                </p>
+                <ul class="chips" aria-label="Tech stack">
+                  <li class="chip">Flutter</li>
+                  <li class="chip">Dart</li>
+                  <li class="chip">Node.js</li>
+                  <li class="chip">WebSocket</li>
+                  <li class="chip">FCM</li>
+                </ul>
+              </div>
+            </article>
+            <article class="case">
+              <div class="case-media">
+                <img decoding="async" alt="Illustration for E-Commerce Marketplace" width="1200" height="676" loading="lazy" src="/my_folio/images/shopping.webp"/>
+              </div>
+              <div class="case-body">
+                <span class="case-index">04</span>
+                <h3>E-Commerce Marketplace</h3>
+                <p>
+                  Developed a full-featured marketplace with product catalogue, search with filters, cart management, and Stripe payment integration. Designed a clean architecture codebase with BLoC state management, repository pattern, and dependency injection via GetIt. Implemented deep linking, dynamic theming, and A/B testable UI variants. Built an admin dashboard for inventory, orders, and revenue analytics.
+                </p>
+                <ul class="chips" aria-label="Tech stack">
+                  <li class="chip">Flutter</li>
+                  <li class="chip">Dart</li>
+                  <li class="chip">.NET</li>
+                  <li class="chip">Stripe</li>
+                </ul>
+              </div>
+            </article>
+            <article class="case">
+              <div class="case-media">
+                <img decoding="async" alt="Illustration for HealthVitals Tracker" width="1200" height="675" loading="lazy" src="/my_folio/images/health.webp"/>
+              </div>
+              <div class="case-body">
+                <span class="case-index">05</span>
+                <h3>HealthVitals Tracker</h3>
+                <p>
+                  Built a HIPAA-aware health monitoring app tracking blood pressure, heart rate over time. Integrated graph to show data daily, weekly, monthly, yearly. Implemented appointment booking system with calendar view.
+                </p>
+                <ul class="chips" aria-label="Tech stack"><li class="chip">Flutter</li><li class="chip">Dart</li><li class="chip">Node.js</li></ul>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+      <section id="experience" class="section section-alt" aria-labelledby="experience-title">
+        <div class="container reveal">
+          <div class="section-head"><span class="eyebrow">Career</span><h2 id="experience-title" class="section-title">Experience</h2></div>
+          <ol class="timeline">
+            <li class="timeline-item">
+              <div class="timeline-row"><h3>Senior Software Engineer</h3><span class="timeline-duration">April 2024 - Present</span></div><div class="timeline-company">R System International</div>
+            </li>
+            <li class="timeline-item">
+              <div class="timeline-row"><h3>Software Engineer</h3><span class="timeline-duration">Sep 2022 - March2024</span></div><div class="timeline-company">Virtual Employee Pvt. Ltd.</div>
+            </li>
+            <li class="timeline-item">
+              <div class="timeline-row"><h3>Flutter Developer</h3><span class="timeline-duration">April 2021 - August 2022</span></div><div class="timeline-company">TechConfer Technologies Pvt. Ltd.</div>
+            </li>
+            <li class="timeline-item">
+              <div class="timeline-row"><h3>Junior Flutter Developer</h3><span class="timeline-duration">June 2020 - Jan 2021</span></div><div class="timeline-company">Trivy Technologies Pvt. Ltd.</div>
+            </li>
+          </ol>
+        </div>
+      </section>
+      <section id="skills" class="section" aria-labelledby="skills-title">
+        <div class="container reveal">
+          <div class="section-head"><span class="eyebrow">Expertise</span><h2 id="skills-title" class="section-title">What I bring</h2></div>
+          <div class="roles">
+            <article class="role">
+              <h3>Mobile Engineering</h3>
+              <p>
+                5+ years building production-grade mobile applications with Flutter &amp; Dart across iOS and Android. I architect scalable, modular codebases using clean architecture, BLoC/Provider/Riverpod state management, and platform channels.
+              </p>
+            </article>
+            <article class="role">
+              <h3>AI-Augmented Development</h3>
+              <p>
+                To accelerate delivery, I use tools like Cursor, Antigravity, and automated refactoring agents to prototype, iterate, and ship at 10x speed.
+              </p>
+            </article>
+            <article class="role">
+              <h3>Backend &amp; System Design</h3>
+              <p>
+                I design event-driven, microservice-ready backends with Serverpod, Golang. My stack includes PostgreSQL, Firebase, Redis, and Docker.
+              </p>
+            </article>
+            <article class="role">
+              <h3>UI/UX &amp; Design Systems</h3>
+              <p>
+                I bridge the gap between design and code by translating Figma specs into pixel-perfect, responsive Flutter UIs.
+              </p>
+            </article>
+            <article class="role">
+              <h3>Open to What's Next</h3>
+              <p>
+                Whether it's a high-growth startup needing an MVP in weeks or an enterprise modernising legacy mobile apps I'm interested.
+              </p>
+            </article>
+          </div>
+          <ul class="skill-list" aria-label="Skills">
+            <li>Flutter &amp; Dart</li>
+            <li>Architect</li>
+            <li>Version control</li>
+            <li>Android/iOS</li>
+            <li>AI Orchestration</li>
+            <li>Firebase</li>
+            <li>App Security</li>
+            <li>CI/CD</li>
+            <li>MVVM</li>
+            <li>BloC/Provider/Riverpod</li>
+            <li>System Design</li>
+          </ul>
+        </div>
+      </section>
+      <section id="education" class="section section-alt" aria-labelledby="education-title">
+        <div class="container reveal">
+          <div class="section-head"><span class="eyebrow">Foundation</span><h2 id="education-title" class="section-title">Education</h2></div>
+          <ul class="edu-list">
+            <li class="edu">
+              <h3>B.Tech — Computer Science and Engineering</h3><div class="edu-institution">PTU</div><div class="edu-duration">2014-2018</div>
+            </li>
+            <li class="edu">
+              <h3>12th — Science</h3><div class="edu-institution">B.S.E.B</div><div class="edu-duration">2011-2013</div>
+            </li>
+            <li class="edu"><h3>10th</h3><div class="edu-institution">C.B.S.E</div><div class="edu-duration">2010-2011</div></li>
+          </ul>
+        </div>
+      </section>
+      <section id="architecture" class="section" aria-labelledby="architecture-title">
+        <div class="container reveal">
+          <div class="section-head">
+            <span class="eyebrow">Behind the scenes</span>
+            <h2 id="architecture-title" class="section-title">How this site is built</h2>
+          </div>
+          <div class="arch">
+            <figure class="arch-diagram">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 462" role="img" aria-labelledby="arch-svg-title"><title id="arch-svg-title">Architecture: PostgreSQL to Serverpod to Jaspr build to GitHub Pages to visitor</title><rect class="node" x="20" y="10" width="320" height="58" rx="12"/><text class="label" x="180.0" y="35" text-anchor="middle">Neon PostgreSQL</text><text class="sub" x="180.0" y="54" text-anchor="middle">Portfolio content tables</text><line class="edge" x1="180.0" y1="72" x2="180.0" y2="100"/><path class="arrow" d="M175.0 94 L180.0 100 L185.0 94 Z"/><text class="edge-label" x="192.0" y="93.0">SQL</text><rect class="node" x="20" y="106" width="320" height="58" rx="12"/><text class="label" x="180.0" y="131" text-anchor="middle">Serverpod API · Render</text><text class="sub" x="180.0" y="150" text-anchor="middle">Read-only public endpoints</text><line class="edge" x1="180.0" y1="168" x2="180.0" y2="196"/><path class="arrow" d="M175.0 190 L180.0 196 L185.0 190 Z"/><text class="edge-label" x="192.0" y="189.0">RPC · build time only</text><rect class="node-accent" x="20" y="202" width="320" height="58" rx="12"/><text class="label" x="180.0" y="227" text-anchor="middle">GitHub Actions + Jaspr</text><text class="sub" x="180.0" y="246" text-anchor="middle">Fetch once → pre-render HTML</text><line class="edge" x1="180.0" y1="264" x2="180.0" y2="292"/><path class="arrow" d="M175.0 286 L180.0 292 L185.0 286 Z"/><text class="edge-label" x="192.0" y="285.0">deploy</text><rect class="node" x="20" y="298" width="320" height="58" rx="12"/><text class="label" x="180.0" y="323" text-anchor="middle">GitHub Pages CDN</text><text class="sub" x="180.0" y="342" text-anchor="middle">Static HTML, CSS, images</text><line class="edge" x1="180.0" y1="360" x2="180.0" y2="388"/><path class="arrow" d="M175.0 382 L180.0 388 L185.0 382 Z"/><text class="edge-label" x="192.0" y="381.0">HTTPS</text><rect class="node" x="20" y="394" width="320" height="58" rx="12"/><text class="label" x="180.0" y="419" text-anchor="middle">You</text><text class="sub" x="180.0" y="438" text-anchor="middle">Instant page · zero API calls</text></svg>
+              <figcaption class="visually-hidden">
+                Data flows from Neon PostgreSQL to the Serverpod API, which GitHub Actions calls once at build time to pre-render HTML with Jaspr; the static files are served from GitHub Pages to visitors.
+              </figcaption>
+            </figure>
+            <div>
+              <p>
+                This site is itself a small production system. Content lives in PostgreSQL behind a Serverpod (Dart) API. On every push — and once a day — GitHub Actions wakes the API, pulls the content once, and pre-renders plain HTML with Jaspr. Visitors get a static page from a CDN and never wait on a server.
+              </p>
+              <ul class="arch-points">
+                <li>Static HTML pre-rendered with Jaspr — crawlable, instant, no runtime API calls.</li>
+                <li>Serverpod API with a read-only public surface; seeding is an operator-only command.</li>
+                <li>Neon serverless PostgreSQL with migrations applied on deploy.</li>
+                <li>CI fails closed: if content can’t be fetched, the last good deploy stays live.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section id="contact" class="section" aria-labelledby="contact-title">
+        <div class="container reveal">
+          <div class="contact-card">
+            <span class="eyebrow">Contact</span>
+            <h2 id="contact-title" class="section-title">Let’s build something great</h2>
+            <p class="section-lead">
+              Hiring for a senior mobile or Flutter role? I’d love to hear about the team and the problems you’re solving.
+            </p>
+            <a class="contact-email" href="mailto:ranjansme12@gmail.com">ranjansme12@gmail.com</a>
+            <div class="hero-ctas">
+              <a class="btn btn-primary" href="mailto:ranjansme12@gmail.com">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/></svg>
+                Email me
+              </a>
+              <a class="btn btn-secondary" rel="noopener noreferrer" href="https://drive.google.com/file/d/1gWePvVX6zjmz-nsWj2ERyamFeuu5xh8U/view?usp=sharing" target="_blank">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                Download résumé
+              </a>
+            </div>
+            <div class="social">
+              <a rel="noopener noreferrer me" href="https://www.linkedin.com/in/abhinav-ranjan-78589aa3/" target="_blank">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+                LinkedIn
+              </a>
+              <a rel="noopener noreferrer me" href="https://github.com/AbhiCodebugger" target="_blank">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
+                GitHub
+              </a>
+              <a rel="noopener noreferrer me" href="https://stackoverflow.com/users/14939199/abhinav" target="_blank">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 15v5h16v-5"/><path d="M8 16h8"/><path d="m8.5 12.5 7.6 1.6"/><path d="m9.9 8.6 7 3.6"/><path d="m12.4 5 5.6 6"/></svg>
+                Stack Overflow
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+    <footer class="site-footer">
+      <div class="container">
+        <span>© 2026 Abhinav Ranjan</span>
+        <span>Built with Dart — Jaspr &amp; Serverpod. <a rel="noopener noreferrer" href="https://github.com/AbhiCodebugger/my_folio" target="_blank">View source</a></span>
+      </div>
+    </footer>
+    <script>
+      (function(){if(!('IntersectionObserver' in window))return;var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting||e.boundingClientRect.top<0){e.target.classList.add('revealed');io.unobserve(e.target)}})},{rootMargin:'0px 0px -8% 0px'});document.querySelectorAll('.reveal').forEach(function(el){io.observe(el)})})();
+    </script>
+  </body>
 </html>
