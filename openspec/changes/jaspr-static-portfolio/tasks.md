@@ -44,7 +44,7 @@
 ## 7. CI/CD and docs
 
 - [ ] 7.1 Rewrite `.github/workflows/deploy.yml`: push/dispatch/daily schedule, Dart-only setup, `jaspr build` with `API_URL`, a link check over `build/jaspr` under `/my_folio/`, then publish `build/jaspr` (no Flutter build). Verify a manual dispatch run succeeds and the published artifact contains no `flutter_bootstrap.js`.
-- [ ] 7.2 Add `myfolio_web` analyze, format, and unit-test jobs to `analyze.yml`/`format.yml`/`tests.yml`. Verify they pass on a PR.
+- [x] 7.2 Add `myfolio_web` analyze, format, and unit-test jobs to `analyze.yml`/`format.yml`/`tests.yml`. Verify they pass on a PR.
 - [x] 7.3 Update the root README (structure table, architecture diagram, build/deploy flow, content-update flow via DB edit + dispatch, rollback). Verify that all relative links in the README resolve.
 
 ## 8. Integration checks
