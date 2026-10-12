@@ -24,3 +24,21 @@ jobs:
       - name: Check formatting
         working-directory: myfolio_server
         run: dart format --set-exit-if-changed .
+
+  format-web:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: dart-lang/setup-dart@v1
+        with:
+          sdk: 3.13.2
+
+      - name: Install dependencies
+        working-directory: myfolio_web
+        run: dart pub get
+
+      - name: Check formatting
+        working-directory: myfolio_web
+        run: dart format --set-exit-if-changed lib test tool

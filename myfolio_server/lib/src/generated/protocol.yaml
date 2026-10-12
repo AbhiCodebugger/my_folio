@@ -1,17 +1,10 @@
 file:
   - getResumeUrl:
-  - getUploadUrl:
 portfolio:
   - getRoles:
   - getProjectList:
-  - createRoles:
-  - createProjects:
-  - createSkills:
   - getSkills:
-  - createExperiences:
   - getExperiences:
-  - createEducations:
   - getEducations:
 user:
   - getUser:
-  - createUser:

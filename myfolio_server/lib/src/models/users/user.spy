@@ -6,7 +6,7 @@ fields:
   summary: String
   imagePath: String
   socialUrls: List<String>
-  phoneNumber: String
+  phoneNumber: String?, scope=serverOnly
   email: String
   location: String
   resumeUrl: String

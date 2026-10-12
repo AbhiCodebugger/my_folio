@@ -45,3 +45,21 @@ jobs:
         if: always()
         working-directory: myfolio_server
         run: docker compose down -v
+
+  test-web:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: dart-lang/setup-dart@v1
+        with:
+          sdk: 3.13.2
+
+      - name: Install dependencies
+        working-directory: myfolio_web
+        run: dart pub get
+
+      - name: Run unit tests
+        working-directory: myfolio_web
+        run: dart test

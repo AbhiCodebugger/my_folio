@@ -1,0 +1,23 @@
+name: myfolio_web
+description: Statically generated public portfolio site (Jaspr).
+publish_to: 'none'
+version: 0.0.1
+
+environment:
+  sdk: ^3.10.0
+
+dependencies:
+  jaspr: 0.23.5
+  universal_web: ^1.1.0
+  myfolio_client:
+    path: ../myfolio_client
+
+dev_dependencies:
+  build_runner: ^2.15.1
+  build_web_compilers: ^4.8.5
+  jaspr_builder: 0.23.5
+  test: ^1.25.5
+  lints: ^5.0.0
+
+jaspr:
+  mode: static
