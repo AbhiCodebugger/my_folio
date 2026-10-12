@@ -43,16 +43,16 @@
 
 ## 7. CI/CD and docs
 
-- [ ] 7.1 Rewrite `.github/workflows/deploy.yml`: push/dispatch/daily schedule, Dart-only setup, `jaspr build` with `API_URL`, a link check over `build/jaspr` under `/my_folio/`, then publish `build/jaspr` (no Flutter build). Verify a manual dispatch run succeeds and the published artifact contains no `flutter_bootstrap.js`.
+- [x] 7.1 Rewrite `.github/workflows/deploy.yml`: push/dispatch/daily schedule, Dart-only setup, `jaspr build` with `API_URL`, a link check over `build/jaspr` under `/my_folio/`, then publish `build/jaspr` (no Flutter build). Verify a manual dispatch run succeeds and the published artifact contains no `flutter_bootstrap.js`.
 - [x] 7.2 Add `myfolio_web` analyze, format, and unit-test jobs to `analyze.yml`/`format.yml`/`tests.yml`. Verify they pass on a PR.
 - [x] 7.3 Update the root README (structure table, architecture diagram, build/deploy flow, content-update flow via DB edit + dispatch, rollback). Verify that all relative links in the README resolve.
 
 ## 8. Integration checks
 
-- [ ] 8.1 On the live URL, verify every section renders with JS disabled, no network calls go to `onrender.com` (DevTools), and all assets load without a 404.
-- [ ] 8.2 Run Lighthouse mobile on the live home page. Verify LCP < 2.5 s and Performance/SEO/Accessibility/Best Practices are each ≥ 90.
-- [ ] 8.3 Check the link preview in LinkedIn Post Inspector and fetch `/my_folio/robots.txt` and `/my_folio/sitemap.xml`. Verify that the preview shows name, title, and image, and that both files are served.
-- [ ] 8.4 Confirm the removed RPCs (`portfolio.createRoles`, `user.createUser`, `file.getUploadUrl`) are rejected by the production API and that row counts in Neon are unchanged.
+- [x] 8.1 On the live URL, verify every section renders with JS disabled, no network calls go to `onrender.com` (DevTools), and all assets load without a 404.
+- [x] 8.2 Run Lighthouse mobile on the live home page. Verify LCP < 2.5 s and Performance/SEO/Accessibility/Best Practices are each ≥ 90.
+- [x] 8.3 Check the link preview in LinkedIn Post Inspector and fetch `/my_folio/robots.txt` and `/my_folio/sitemap.xml`. Verify that the preview shows name, title, and image, and that both files are served.
+- [x] 8.4 Confirm the removed RPCs (`portfolio.createRoles`, `user.createUser`, `file.getUploadUrl`) are rejected by the production API and that row counts in Neon are unchanged.
 
 ## Workflow follow-up
 
